@@ -1,6 +1,16 @@
 /*----- constants -----*/
 const sqSize = 4;
 const maxSquares = 20;
+const checkArray = [
+    ['x', 'y - 1'],
+    ['x', 'y + 1'],
+    ['x - 1', 'y - 1'],
+    ['x - 1', 'y'],
+    ['x - 1', 'y + 1'],
+    ['x + 1', 'y - 1'],
+    ['x + 1', 'y'],
+    ['x + 1', 'y + 1']
+]
 
 /*----- app's state (variables) -----*/
 let mineArr;
@@ -22,9 +32,9 @@ let squaresDOMNest;
 
 /*----- functions -----*/
 // TEST FUNCTIONS/VARIABLES
-let size = 10
+let size = 10;
 let num = 10;
-init(10);
+init(size);
 
 // INITIALIZATION FUNCTIONS //
 function init(size) {
@@ -65,14 +75,27 @@ function initMines(numMines) {
     while (numMines > 0) {
         let arr1 = Math.floor(Math.random() * numMines);
         let arr2 = Math.floor(Math.random() * numMines);
+
+        //CHECK IF MINE COORDINATES ALREADY EXIST, IF YES THEN RE-RUN
+
         mineArr.push({ name: `m${numMines}`, arr1: `${arr1}`, arr2: `${arr2}` });
         numMines = numMines - 1;
 
     }
 }
 
-function checkVicinity() {
 
+
+function checkVicinity(x, y) {
+    let vicTotal = 0;
+    let sqCheck = squaresDOMNest[x][y];
+    sqCheck.style.backgroundColor = 'green';
+    checkArray.forEach(function (elem) {
+        if (squaresDOMNest[eval(elem[0])][eval(elem[1])].id) ++vicTotal;
+        squaresDOMNest[eval(elem[0])][eval(elem[1])].style.backgroundColor = 'orange';
+        console.log(eval(elem[0]), eval(elem[1]))
+    })
+    return vicTotal;
 }
 
 function initSquares(size) {
@@ -101,8 +124,8 @@ function initSquares(size) {
 
 function assignMines() {
     mineArr.forEach(function (mine) {
-        // console.log(mine.arr1, mine.arr2)
         squaresDOMNest[mine.arr1][mine.arr2].id = 'mine';
+        squaresDOMNest[mine.arr1][mine.arr2].style.backgroundColor = 'red';
     })
 }
 
