@@ -3,7 +3,7 @@ const sqSize = 4;
 const maxSquares = 20;
 
 /*----- app's state (variables) -----*/
-let mineArr = [];
+let mineArr;
 let markerArr;
 let boardArr;
 
@@ -19,10 +19,11 @@ let boardDOM = document.getElementById('board');
 
 /*----- functions -----*/
 // TEST FUNCTIONS/VARIABLES
-initSquares(10);
-initBoard(10);
 let size = 10
 let num = 10;
+initSquares(size);
+initBoard(size);
+initMines(num)
 
 // INITIALIZATION FUNCTIONS //
 function init() {
@@ -32,12 +33,11 @@ function init() {
 function initBoard(size) {
     //populate board data structure based on board size
     boardArr = new Array(size);
-    boardArr.forEach(function (element, idx) {
-        element = [];
-    })
+    boardArr.fill(new Array(size))
 }
 
 function initMines(num) {
+    mineArr = [];
     while (num > 0) {
         let arr1 = Math.floor(Math.random() * num)
         console.log(arr1)
