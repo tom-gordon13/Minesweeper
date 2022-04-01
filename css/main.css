@@ -5,7 +5,45 @@
 }
 
 :root {
-    --container-width: 40vw;
-    --body-green: #88BC72;
+    --container-width: 60vh;
+    --header-height: 10vh;
+    /* --body-green: #88BC72; */
+}
 
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+container {
+    height: 70vh;
+    width: var(--container-width);
+    margin-top: 5vh;
+    display: grid;
+    grid-template-rows: 10vh, 1fr;
+    border: 5px solid black;
+}
+
+header {
+    grid-template-rows: span 1;
+    border-bottom: 5px solid black;
+    height: var(--header-height);
+    width: var(--container-width);
+}
+
+#board {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: flex-start;
+    grid-template-columns: 2 / span 1;
+    height: var(--container-width);
+    width: var(--container-width);
+}
+
+#board > .square {
+    height: 10px; 
+    width: 10px;
+    background-color: red;
+    border: 1px solid black;
 }
