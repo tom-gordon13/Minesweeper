@@ -17,18 +17,27 @@ let mineArr;
 let markerArr;
 let boardArr;
 let gameState; // null 
+let clickedIdx; // Object that will hold the index value of the most recently clicked array
 
 /*----- cached element references -----*/
 //grab board, will be used to create squares
 let boardDOM = document.getElementById('board');
 let squaresDOM; //cached later, after buttons are generated
-let squaresDOMNest;
-
-
+let squaresDOMNest; // Nested array of squares
 
 /*----- event listeners -----*/
 boardDOM.addEventListener('click', handleClick)
 
+
+// function checkIdx() {
+//     for (var i = 0; i <= squaresDOM.length; i++) {
+//         (function (index) {
+//             squaresDOM[index].addEventListener('click', function () {
+//                 console.log("you clicked region number " + index);
+//             })
+//         })(i);
+//     }
+// }
 
 /*----- functions -----*/
 // TEST FUNCTIONS/VARIABLES
@@ -54,11 +63,11 @@ function initMarkers() {
 function chunkSquares(size) {
     // Turns squares DOM elements (buttons) into a nested array the same size as the board
     squaresDOMNest = [];
-    squaresDOM = [].concat(...squaresDOM)
+    squaresDOMNew = [].concat(...squaresDOM)
 
-    while (squaresDOM.length) {
+    while (squaresDOMNew.length) {
         squaresDOMNest.push(
-            squaresDOM.splice(0, size)
+            squaresDOMNew.splice(0, size)
         )
     }
 }
@@ -129,9 +138,18 @@ function assignMines() {
 
 
 function handleClick(evt) {
-    if (evt.target.id) loseFunction();
+    clickedIdx = { total: null, arr1: null, arr2: null }
+    if (evt.target.id === 'mine') loseFunction();
+    evt.target.id = 'clicked'
     // if (!evt.target.id) checkVicinity(1, 1);
-    if (!evt.target.id) console.log(evt.target)
+
+    ///// TRYING TO EXTRACT INDEX OF CLICKED ELEMENT FROM PARENT NODE LIST
+    if (evt.target.id !== 'mine') {
+        clickedIdx.total = squaresDOM.findIndex(square => square.id === 'clicked');
+        clickedIdx.arr1 = Math.floor(clickedIdx.total / size)
+        clickedIdx.arr2 = clickedIdx.total % size;
+        // let arr1clicked = clickedIdx
+    }
 }
 
 function loseFunction() {
