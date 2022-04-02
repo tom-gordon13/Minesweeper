@@ -75,11 +75,11 @@ function initMines(numMines) {
     start_position: while (mineArr.length < numMines) {
         let arr1 = Math.floor(Math.random() * size);
         let arr2 = Math.floor(Math.random() * size);
+        //CHECK IF MINE COORDINATES ALREADY EXIST, IF YES THEN RETURN TO START_POSITION
         if (mineArr.some(elem => elem.arr1 === arr1 && elem.arr2 === arr2)) continue start_position;
-        //CHECK IF MINE COORDINATES ALREADY EXIST, IF YES THEN RE-RUN
 
+        // PUSH NEWLY-CREATED MINE TO mineArr
         mineArr.push({ name: `m${numMines}`, arr1: `${arr1}`, arr2: `${arr2}` });
-
     }
 }
 
