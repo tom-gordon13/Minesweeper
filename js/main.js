@@ -16,7 +16,7 @@ const checkArray = [
 let mineArr;
 let markerArr;
 let boardArr;
-
+let gameState; // null 
 
 /*----- cached element references -----*/
 //grab board, will be used to create squares
@@ -27,21 +27,23 @@ let squaresDOMNest;
 
 
 /*----- event listeners -----*/
-
+boardDOM.addEventListener('click', handleClick)
 
 
 /*----- functions -----*/
 // TEST FUNCTIONS/VARIABLES
-let size = 10;
+let size = 15;
 let num = 10;
 init(size);
 
 // INITIALIZATION FUNCTIONS //
 function init(size) {
+    gameState = null;
     initSquares(size);
     chunkSquares(size);
     initBoard(size);
     initMines(num);
+    assignMines();
     initMarkers();
 }
 
@@ -59,8 +61,6 @@ function chunkSquares(size) {
             squaresDOM.splice(0, size)
         )
     }
-
-    // return squaresDOMNest;
 }
 
 function initBoard(size) {
@@ -72,14 +72,13 @@ function initBoard(size) {
 function initMines(numMines) {
     // console.log(numMines);
     mineArr = [];
-    while (numMines > 0) {
-        let arr1 = Math.floor(Math.random() * numMines);
-        let arr2 = Math.floor(Math.random() * numMines);
-
+    start_position: while (mineArr.length < numMines) {
+        let arr1 = Math.floor(Math.random() * size);
+        let arr2 = Math.floor(Math.random() * size);
+        if (mineArr.some(elem => elem.arr1 === arr1 && elem.arr2 === arr2)) continue start_position;
         //CHECK IF MINE COORDINATES ALREADY EXIST, IF YES THEN RE-RUN
 
         mineArr.push({ name: `m${numMines}`, arr1: `${arr1}`, arr2: `${arr2}` });
-        numMines = numMines - 1;
 
     }
 }
@@ -93,9 +92,8 @@ function checkVicinity(x, y) {
     checkArray.forEach(function (elem) {
         if (squaresDOMNest[eval(elem[0])][eval(elem[1])].id) ++vicTotal;
         squaresDOMNest[eval(elem[0])][eval(elem[1])].style.backgroundColor = 'orange';
-        console.log(eval(elem[0]), eval(elem[1]))
     })
-    return vicTotal;
+    console.log(vicTotal)
 }
 
 function initSquares(size) {
@@ -129,6 +127,16 @@ function assignMines() {
     })
 }
 
+
+function handleClick(evt) {
+    if (evt.target.id) loseFunction();
+    // if (!evt.target.id) checkVicinity(1, 1);
+    if (!evt.target.id) console.log(evt.target)
+}
+
+function loseFunction() {
+    alert('You lose!')
+}
 
 // RENDER FUNCTIONS //
 function render() {

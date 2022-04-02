@@ -54,7 +54,7 @@ header {
 #mine {
     height: 7px; 
     width: 7px;
-    border-radius: 50%;
-    background-color: red;
+    /* border-radius: 50%; */
+    /* background-color: red; */
     
 }
