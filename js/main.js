@@ -79,7 +79,7 @@ function initBoard(size) {
 }
 
 function initMines(numMines) {
-    // console.log(numMines);
+
     mineArr = [];
     start_position: while (mineArr.length < numMines) {
         let arr1 = Math.floor(Math.random() * size);
@@ -88,7 +88,7 @@ function initMines(numMines) {
         if (mineArr.some(elem => elem.arr1 === arr1 && elem.arr2 === arr2)) continue start_position;
 
         // PUSH NEWLY-CREATED MINE TO mineArr
-        mineArr.push({ name: `m${numMines}`, arr1: `${arr1}`, arr2: `${arr2}` });
+        mineArr.push({ name: `m${mineArr.length}`, arr1: `${arr1}`, arr2: `${arr2}` });
     }
 }
 
@@ -102,7 +102,7 @@ function checkVicinity(x, y) {
         if (squaresDOMNest[eval(elem[0])][eval(elem[1])].id) ++vicTotal;
         squaresDOMNest[eval(elem[0])][eval(elem[1])].style.backgroundColor = 'orange';
     })
-    console.log(vicTotal)
+    return vicTotal
 }
 
 function initSquares(size) {
@@ -143,13 +143,16 @@ function handleClick(evt) {
     evt.target.id = 'clicked'
     // if (!evt.target.id) checkVicinity(1, 1);
 
-    ///// TRYING TO EXTRACT INDEX OF CLICKED ELEMENT FROM PARENT NODE LIST
+    ///// EXTRACT INDEX OF CLICKED ELEMENT FROM PARENT NODE LIST
     if (evt.target.id !== 'mine') {
         clickedIdx.total = squaresDOM.findIndex(square => square.id === 'clicked');
         clickedIdx.arr1 = Math.floor(clickedIdx.total / size)
         clickedIdx.arr2 = clickedIdx.total % size;
-        // let arr1clicked = clickedIdx
     }
+    evt.target.innerText = checkVicinity(clickedIdx.arr1, clickedIdx.arr2);
+
+    // Remove 'clicked' id so that it does not interfere with next square clicked
+    evt.target.removeAttribute('id')
 }
 
 function loseFunction() {
