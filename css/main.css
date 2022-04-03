@@ -32,7 +32,10 @@ container {
 
 header {
     grid-template-rows: span 1;
-    border: 2px solid slategray;
+    background: slategray;
+    border: 5px solid rgb(70, 80, 90);
+    border-left: 3px solid rgb(216, 213, 213);
+    border-top: 3px solid rgb(216, 213, 213);
     margin: 5px;
     padding: 5px;
     align-self: flex-start;
@@ -94,7 +97,7 @@ button {
     font-size: 3.2vmin;
 }
 
-.marker {
+.markerImg {
     height: 20px;
     width: 20px;
 }

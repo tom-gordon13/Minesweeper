@@ -163,26 +163,45 @@ function handleRightClick(evt) {
     // Prevents default "right click" action from occuring
     evt.preventDefault();
 
-    console.log(evt.target.id)
+
     if (evt.target.className === 'square-past-clicked') return;
+    if (evt.target.className === 'markerImg') {
+        evt.target.parentElement.className = 'square';
+
+
+        // If right click on a market, remove that marker from the markerArr
+        clickedIdx = { total: null, arr1: null, arr2: null };
+        evt.target.parentElement.id = 'rmv-marker';
+        clickedIdx.total = squaresDOM.findIndex(square => square.id === 'rmv-marker');
+        let idx = markerArr.findIndex(elem => elem.total = clickedIdx.total);
+        markerArr.splice(idx, 1);
+
+        //Remove marker image
+        evt.target.remove();
+
+        renderMarkerCount();
+        return;
+    }
+
     let img = document.createElement('img')
     img.src = imgMarker;
-    img.className = 'marker'
+    img.className = 'markerImg'
     evt.target.appendChild(img)
-
 
     ///// EXTRACT INDEX OF CLICKED ELEMENT FROM PARENT NODE LIST, ASSIGN TO CLASS 'MARKER'
     clickedIdx = { total: null, arr1: null, arr2: null };
-    evt.target.className = 'marker';
-    clickedIdx.total = squaresDOM.findIndex(square => square.className === 'marker');
+    evt.target.id = 'marker';
+    clickedIdx.total = squaresDOM.findIndex(square => square.id === 'marker');
     clickedIdx.arr1 = Math.floor(clickedIdx.total / size)
     clickedIdx.arr2 = clickedIdx.total % size;
 
-    //ADD ELEMENT TO MARKER ARRAY
+    //ADD ELEMENT TO MARKER ARRAY (but first check if it is already included)
     markerArr.push(clickedIdx);
-
+    evt.target.id = 'square';
     render();
 }
+
+
 
 
 function loseFunction() {
