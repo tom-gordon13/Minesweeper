@@ -1,6 +1,7 @@
 /*----- constants -----*/
 const sqSize = 4;
 const maxSquares = 20;
+const imgMarker = 'images/flag-marker.png';
 const checkArray = [
     ['x', 'y - 1'],
     ['x', 'y + 1'],
@@ -25,24 +26,18 @@ let boardDOM = document.getElementById('board');
 let squaresDOM; //cached later, after buttons are generated
 let squaresDOMNest; // Nested array of squares
 
+
 /*----- event listeners -----*/
 boardDOM.addEventListener('click', handleClick)
 
+boardDOM.addEventListener('contextmenu', handleRightClick)
 
-// function checkIdx() {
-//     for (var i = 0; i <= squaresDOM.length; i++) {
-//         (function (index) {
-//             squaresDOM[index].addEventListener('click', function () {
-//                 console.log("you clicked region number " + index);
-//             })
-//         })(i);
-//     }
-// }
+
 
 /*----- functions -----*/
 // TEST FUNCTIONS/VARIABLES
 let size = 15;
-let num = 10;
+let num = 20;
 init(size);
 
 // INITIALIZATION FUNCTIONS //
@@ -153,13 +148,33 @@ function handleClick(evt) {
         clickedIdx.arr1 = Math.floor(clickedIdx.total / size)
         clickedIdx.arr2 = clickedIdx.total % size;
     }
-    console.log(clickedIdx)
     evt.target.innerText = checkVicinity(clickedIdx.arr1, clickedIdx.arr2);
 
     // Remove 'clicked' id so that it does not interfere with next square clicked
     evt.target.removeAttribute('id')
     evt.target.className += 'past-clicked'
 }
+
+
+function handleRightClick(evt) {
+    // Prevents default "right click" action from occuring
+    evt.preventDefault();
+    let img = document.createElement('img')
+    img.src = imgMarker;
+    img.className = 'marker'
+    evt.target.appendChild(img)
+
+
+    ///// EXTRACT INDEX OF CLICKED ELEMENT FROM PARENT NODE LIST, ASSIGN TO CLASS 'MARKER'
+    clickedIdx = { total: null, arr1: null, arr2: null };
+    evt.target.className = 'marker';
+    clickedIdx.total = squaresDOM.findIndex(square => square.className === 'marker');
+    clickedIdx.arr1 = Math.floor(clickedIdx.total / size)
+    clickedIdx.arr2 = clickedIdx.total % size;
+
+
+}
+
 
 function loseFunction() {
     alert('You lose!')

@@ -74,3 +74,8 @@ button {
     text-align: center;
     font-size: 3.2vmin;
 }
+
+.marker {
+    height: 20px;
+    width: 20px;
+}
