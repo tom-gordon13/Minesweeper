@@ -25,7 +25,7 @@ let clickedIdx; // Object that will hold the index value of the most recently cl
 let boardDOM = document.getElementById('board');
 let squaresDOM; //cached later, after buttons are generated
 let squaresDOMNest; // Nested array of squares
-
+let markerCounter = document.getElementById('markerCount');
 
 /*----- event listeners -----*/
 boardDOM.addEventListener('click', handleClick)
@@ -37,7 +37,7 @@ boardDOM.addEventListener('contextmenu', handleRightClick)
 /*----- functions -----*/
 // TEST FUNCTIONS/VARIABLES
 let size = 15;
-let num = 20;
+let num = 50;
 init(size);
 
 // INITIALIZATION FUNCTIONS //
@@ -140,7 +140,8 @@ function assignMines() {
 function handleClick(evt) {
     clickedIdx = { total: null, arr1: null, arr2: null }
     if (evt.target.class === 'mine') loseFunction();
-    evt.target.id = 'clicked'
+    if (evt.target.className === 'marker' || evt.target.className === 'past-clicked') return;
+    evt.target.id = 'clicked';
 
     ///// EXTRACT INDEX OF CLICKED ELEMENT FROM PARENT NODE LIST
     if (evt.target.class !== 'mine') {
@@ -152,13 +153,18 @@ function handleClick(evt) {
 
     // Remove 'clicked' id so that it does not interfere with next square clicked
     evt.target.removeAttribute('id')
-    evt.target.className += 'past-clicked'
+    evt.target.className += '-past-clicked'
+
+    render();
 }
 
 
 function handleRightClick(evt) {
     // Prevents default "right click" action from occuring
     evt.preventDefault();
+
+    console.log(evt.target.id)
+    if (evt.target.className === 'square-past-clicked') return;
     let img = document.createElement('img')
     img.src = imgMarker;
     img.className = 'marker'
@@ -172,7 +178,10 @@ function handleRightClick(evt) {
     clickedIdx.arr1 = Math.floor(clickedIdx.total / size)
     clickedIdx.arr2 = clickedIdx.total % size;
 
+    //ADD ELEMENT TO MARKER ARRAY
+    markerArr.push(clickedIdx);
 
+    render();
 }
 
 
@@ -183,10 +192,15 @@ function loseFunction() {
 
 // RENDER FUNCTIONS //
 function render() {
-
+    renderMines();
+    renderMarkerCount();
 }
 
 function renderMines() {
 
+}
+
+function renderMarkerCount() {
+    markerCounter.innerText = markerArr.length;
 }
 
