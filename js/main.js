@@ -99,11 +99,15 @@ function checkVicinity(x, y) {
     let sqCheck = squaresDOMNest[x][y];
     // sqCheck.style.backgroundColor = 'green';
     checkArray.forEach(function (elem) {
+        // Checking for edge or board cases
+        if (eval(elem[0]) < 0 || eval(elem[0]) > size - 1) return;
         if (squaresDOMNest[eval(elem[0])][eval(elem[1])] === undefined) return;
+
+        // if (squaresDOMNest[eval(elem[1])][eval(elem[0])] === undefined) return;
         if (squaresDOMNest[eval(elem[0])][eval(elem[1])].class === 'mine') ++vicTotal;
         // squaresDOMNest[eval(elem[0])][eval(elem[1])].style.backgroundColor = 'orange';
     })
-    return vicTotal
+    return vicTotal;
 }
 
 function initSquares(size) {
@@ -142,7 +146,6 @@ function handleClick(evt) {
     clickedIdx = { total: null, arr1: null, arr2: null }
     if (evt.target.class === 'mine') loseFunction();
     evt.target.id = 'clicked'
-    // if (!evt.target.id) checkVicinity(1, 1);
 
     ///// EXTRACT INDEX OF CLICKED ELEMENT FROM PARENT NODE LIST
     if (evt.target.class !== 'mine') {
@@ -150,6 +153,7 @@ function handleClick(evt) {
         clickedIdx.arr1 = Math.floor(clickedIdx.total / size)
         clickedIdx.arr2 = clickedIdx.total % size;
     }
+    console.log(clickedIdx)
     evt.target.innerText = checkVicinity(clickedIdx.arr1, clickedIdx.arr2);
 
     // Remove 'clicked' id so that it does not interfere with next square clicked
@@ -159,6 +163,7 @@ function handleClick(evt) {
 
 function loseFunction() {
     alert('You lose!')
+    init(size);
 }
 
 // RENDER FUNCTIONS //
