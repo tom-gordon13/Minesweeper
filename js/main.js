@@ -81,11 +81,11 @@ function initBoard(size) {
 function initMines(numMines) {
 
     mineArr = [];
-    start_position: while (mineArr.length < numMines) {
+    while (mineArr.length < numMines) {
         let arr1 = Math.floor(Math.random() * size);
         let arr2 = Math.floor(Math.random() * size);
         //CHECK IF MINE COORDINATES ALREADY EXIST, IF YES THEN RETURN TO START_POSITION
-        if (mineArr.some(elem => elem.arr1 === arr1 && elem.arr2 === arr2)) continue start_position;
+        if (mineArr.some(elem => elem.arr1 === arr1 && elem.arr2 === arr2)) continue;
 
         // PUSH NEWLY-CREATED MINE TO mineArr
         mineArr.push({ name: `m${mineArr.length}`, arr1: `${arr1}`, arr2: `${arr2}` });
@@ -97,10 +97,11 @@ function initMines(numMines) {
 function checkVicinity(x, y) {
     let vicTotal = 0;
     let sqCheck = squaresDOMNest[x][y];
-    sqCheck.style.backgroundColor = 'green';
+    // sqCheck.style.backgroundColor = 'green';
     checkArray.forEach(function (elem) {
-        if (squaresDOMNest[eval(elem[0])][eval(elem[1])].id) ++vicTotal;
-        squaresDOMNest[eval(elem[0])][eval(elem[1])].style.backgroundColor = 'orange';
+        if (squaresDOMNest[eval(elem[0])][eval(elem[1])] === undefined) return;
+        if (squaresDOMNest[eval(elem[0])][eval(elem[1])].class === 'mine') ++vicTotal;
+        // squaresDOMNest[eval(elem[0])][eval(elem[1])].style.backgroundColor = 'orange';
     })
     return vicTotal
 }
@@ -131,7 +132,7 @@ function initSquares(size) {
 
 function assignMines() {
     mineArr.forEach(function (mine) {
-        squaresDOMNest[mine.arr1][mine.arr2].id = 'mine';
+        squaresDOMNest[mine.arr1][mine.arr2].class = 'mine';
         squaresDOMNest[mine.arr1][mine.arr2].style.backgroundColor = 'red';
     })
 }
@@ -139,12 +140,12 @@ function assignMines() {
 
 function handleClick(evt) {
     clickedIdx = { total: null, arr1: null, arr2: null }
-    if (evt.target.id === 'mine') loseFunction();
+    if (evt.target.class === 'mine') loseFunction();
     evt.target.id = 'clicked'
     // if (!evt.target.id) checkVicinity(1, 1);
 
     ///// EXTRACT INDEX OF CLICKED ELEMENT FROM PARENT NODE LIST
-    if (evt.target.id !== 'mine') {
+    if (evt.target.class !== 'mine') {
         clickedIdx.total = squaresDOM.findIndex(square => square.id === 'clicked');
         clickedIdx.arr1 = Math.floor(clickedIdx.total / size)
         clickedIdx.arr2 = clickedIdx.total % size;
@@ -153,6 +154,7 @@ function handleClick(evt) {
 
     // Remove 'clicked' id so that it does not interfere with next square clicked
     evt.target.removeAttribute('id')
+    evt.target.className += 'past-clicked'
 }
 
 function loseFunction() {

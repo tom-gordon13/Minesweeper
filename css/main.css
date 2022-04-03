@@ -51,13 +51,26 @@ header {
     border-left: 3px solid white;
     border-top: 3px solid white;
     margin: 0;
+    font-size: 5vmin;
 }
 
 
-#mine {
+.mine {
     height: 7px; 
     width: 7px;
     /* border-radius: 50%; */
     /* background-color: red; */
     
+}
+
+.past-clicked{
+    background-color: rgb(179, 200, 221);
+}
+
+button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 3.2vmin;
 }
