@@ -28,6 +28,7 @@ let clickedIdx; // Object that will hold the index value of the most recently cl
 
 /*----- cached element references -----*/
 //grab board, will be used to create squares
+let containerDOM = document.getElementById('game-contain');
 let boardDOM = document.getElementById('board');
 let squaresDOM; //cached later, after buttons are generated
 let squaresDOMNest; // Nested array of squares
@@ -41,7 +42,7 @@ boardDOM.addEventListener('contextmenu', handleRightClick)
 
 /*----- functions -----*/
 // TEST FUNCTIONS/VARIABLES
-let size = 20; //width of game board
+let size = 15; //width of game board
 let num = 50; // number of mines
 init(size);
 
@@ -92,7 +93,6 @@ function initMines(numMines) {
 }
 
 
-
 function checkVicinity(x, y) {
     let vicTotal = 0; //vicTotal === vicinity total, i.e. number of mines in adjacent squares
 
@@ -104,18 +104,16 @@ function checkVicinity(x, y) {
     return vicTotal;
 }
 
+
 function initSquares(size) {
 
     //Set board container size to fit squares
-    boardDOM.style.height = `${size * sqSize}vmin`
-    boardDOM.style.width = `${size * sqSize}vmin`
-
-
-
-    if (size > maxSquares) return;
-    let numSquares = size ** 2;
+    containerDOM.style.width = `${size * sqSize}vmin`
+    boardDOM.style.height = `${size * sqSize}vmin` //needs to be different than container because container also contains the header
+    // boardDOM.style.width = `${size * sqSize}vmin`
 
     // Initialize new squares based on chosen board size
+    let numSquares = size ** 2;
     while (numSquares > 0) {
         let square = document.createElement('button');
         square.setAttribute('class', 'square');
@@ -124,83 +122,100 @@ function initSquares(size) {
         boardDOM.appendChild(square);
         numSquares--;
     }
+    // Add button elements to an array that can be queried to match with board array
     squaresDOM = [...document.querySelectorAll('button')];
 }
 
 
 function assignMines() {
+    // Assign mines to the board element, MAY BE ABLE TO REMOVE THIS FUNCTION
     mineArr.forEach(function (mine) {
         squaresDOMNest[mine.arr1][mine.arr2].class = 'mine';
         squaresDOMNest[mine.arr1][mine.arr2].style.backgroundColor = 'red';
     })
 }
 
-
-function handleClick(evt) {
-    clickedIdx = { total: null, arr1: null, arr2: null }
-    if (evt.target.class === 'mine') loseFunction();
-    if (evt.target.className === 'marker' || evt.target.className === 'past-clicked') return;
-    evt.target.id = 'clicked';
-
-    ///// EXTRACT INDEX OF CLICKED ELEMENT FROM PARENT NODE LIST
-    if (evt.target.class !== 'mine') {
-        clickedIdx.total = squaresDOM.findIndex(square => square.id === 'clicked');
+function extractClickedIdx(evt, element, elemName, idFind) {
+    if (evt.target.element !== `${elemName}`) {
+        clickedIdx.total = squaresDOM.findIndex(square => square.id === idFind);
         clickedIdx.arr1 = Math.floor(clickedIdx.total / size)
         clickedIdx.arr2 = clickedIdx.total % size;
     }
-    let vicTotal = checkVicinity(clickedIdx.arr1, clickedIdx.arr2)
-    evt.target.innerText = vicTotal;
-    evt.target.style.color = vicColors[vicTotal];
-
-    // Remove 'clicked' id so that it does not interfere with next square clicked
-    evt.target.removeAttribute('id')
-    evt.target.className += '-past-clicked'
-
-    render();
 }
 
 
-function handleRightClick(evt) {
-    // Prevents default "right click" action from occuring
-    evt.preventDefault();
+// function handleClick(evt) {
+//     clickedIdx = { total: null, arr1: null, arr2: null }
+//     if (evt.target.class === 'mine') loseFunction();
+//     if (evt.target.className === 'marker' || evt.target.className === 'past-clicked') return;
+//     evt.target.id = 'clicked';
+
+//     ///// EXTRACT INDEX OF CLICKED ELEMENT FROM PARENT NODE LIST
+//     // if (evt.target.class !== 'mine') {
+//     //     clickedIdx.total = squaresDOM.findIndex(square => square.id === 'clicked');
+//     //     clickedIdx.arr1 = Math.floor(clickedIdx.total / size)
+//     //     clickedIdx.arr2 = clickedIdx.total % size;
+//     // }
+
+//     extractClickedIdx(evt, 'class', 'mine', 'clicked'); //should replace commented code above ^^
+
+//     let vicTotal = checkVicinity(clickedIdx.arr1, clickedIdx.arr2)
+//     evt.target.innerText = vicTotal;
+//     evt.target.style.color = vicColors[vicTotal];
+
+//     // Remove 'clicked' id so that it does not interfere with next square clicked
+//     evt.target.removeAttribute('id')
+//     evt.target.className += '-past-clicked' // Obtain "square-past-clicked" styling
+
+//     render();
+// }
 
 
-    if (evt.target.className === 'square-past-clicked') return;
-    if (evt.target.className === 'markerImg') {
-        evt.target.parentElement.className = 'square';
+// function handleRightClick(evt) {
+//     // Prevents default "right click" action from occuring
+//     evt.preventDefault();
 
 
-        // If right click on a market, remove that marker from the markerArr
-        clickedIdx = { total: null, arr1: null, arr2: null };
-        evt.target.parentElement.id = 'rmv-marker';
-        clickedIdx.total = squaresDOM.findIndex(square => square.id === 'rmv-marker');
-        let idx = markerArr.findIndex(elem => elem.total = clickedIdx.total);
-        markerArr.splice(idx, 1);
+//     if (evt.target.className === 'square-past-clicked') return;
+//     if (evt.target.className === 'markerImg') {
+//         evt.target.parentElement.className = 'square';
 
-        //Remove marker image
-        evt.target.remove();
 
-        renderMarkerCount();
-        return;
-    }
+//         // If right click on a market, remove that marker from the markerArr
+//         clickedIdx = { total: null, arr1: null, arr2: null };
+//         evt.target.parentElement.id = 'rmv-marker';
+//         clickedIdx.total = squaresDOM.findIndex(square => square.id === 'rmv-marker');
+//         let idx = markerArr.findIndex(elem => elem.total = clickedIdx.total);
+//         markerArr.splice(idx, 1);
 
-    let img = document.createElement('img')
-    img.src = imgMarker;
-    img.className = 'markerImg'
-    evt.target.appendChild(img)
+//         //Remove marker image
+//         evt.target.remove();
 
-    ///// EXTRACT INDEX OF CLICKED ELEMENT FROM PARENT NODE LIST, ASSIGN TO CLASS 'MARKER'
-    clickedIdx = { total: null, arr1: null, arr2: null };
-    evt.target.id = 'marker';
-    clickedIdx.total = squaresDOM.findIndex(square => square.id === 'marker');
-    clickedIdx.arr1 = Math.floor(clickedIdx.total / size)
-    clickedIdx.arr2 = clickedIdx.total % size;
+//         renderMarkerCount();
+//         return;
+//     }
 
-    //ADD ELEMENT TO MARKER ARRAY (but first check if it is already included)
-    markerArr.push(clickedIdx);
-    evt.target.id = 'square';
-    render();
-}
+//     let img = document.createElement('img')
+//     img.src = imgMarker;
+//     img.className = 'markerImg'
+//     evt.target.appendChild(img)
+
+//     ///// EXTRACT INDEX OF CLICKED ELEMENT FROM PARENT NODE LIST, ASSIGN TO CLASS 'MARKER'
+//     clickedIdx = { total: null, arr1: null, arr2: null };
+
+
+//     // evt.target.id = 'marker';
+//     // clickedIdx.total = squaresDOM.findIndex(square => square.id === 'marker');
+//     // clickedIdx.arr1 = Math.floor(clickedIdx.total / size)
+//     // clickedIdx.arr2 = clickedIdx.total % size;
+
+//     extractClickedIdx(evt, 'id', 'marker', 'marker'); //should replace commented code above ^^
+
+//     //ADD ELEMENT TO MARKER ARRAY (but first check if it is already included)
+//     markerArr.push(clickedIdx);
+//     evt.target.id = 'square';
+//     render();
+// }
 
 
 
