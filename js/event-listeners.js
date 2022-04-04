@@ -6,7 +6,7 @@
 //     }
 // }
 
-function extractClickedIdx(evt, element, elemName, idName) {
+function extractClickedIdx(evt, idName) {
     evt.target.id = idName;
     clickedIdx.total = squaresDOM.findIndex(square => square.id === idName);
     clickedIdx.arr1 = Math.floor(clickedIdx.total / size)
@@ -19,7 +19,7 @@ let handleClick = function handleClick(evt) {
     clickedIdx = { total: null, arr1: null, arr2: null }
 
     // Extract the index of a square that was clicked
-    extractClickedIdx(evt, 'class', 'mine', 'clicked');
+    extractClickedIdx(evt, 'clicked');
 
     // Check if clicked button index matches the index of a mine
     let incl = mineArr.some(elem => elem.total == clickedIdx.total);
@@ -86,9 +86,17 @@ let handleRightClick = function handleRightClick(evt) {
 
     extractClickedIdx(evt, 'marker'); //should replace commented code above ^^
 
+
+    // evt.target.id = 'marker';
+
+    // clickedIdx.total = squaresDOM.findIndex(square => square.id === 'marker');
+    // clickedIdx.arr1 = Math.floor(clickedIdx.total / size)
+    // clickedIdx.arr2 = clickedIdx.total % size;
+
     //ADD ELEMENT TO MARKER ARRAY (but first check if it is already included)
     markerArr.push(clickedIdx);
     evt.target.id = 'square';
     render();
 }
+
 
