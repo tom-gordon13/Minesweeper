@@ -24,7 +24,7 @@ let mineArr;
 let markerArr;
 let boardArr;
 let gameState; // null 
-let clickedIdx; // Object that will hold the index value of the most recently clicked array
+let clickedIdx = { total: null, arr1: null, arr2: null }; // Object that will hold the index value of the most recently clicked array
 
 /*----- cached element references -----*/
 //grab board, will be used to create squares
@@ -50,11 +50,11 @@ init(size);
 function init(size) {
     gameState = null;
     initSquares(size);
-    chunkSquares(size);
-    initBoard(size);
-    initMines(num);
-    assignMines();
-    initMarkers();
+    chunkSquares(size); //
+    initBoard(size); //
+    initMines(num); //
+    assignMines(); //
+    initMarkers(); //
 }
 
 function initMarkers() {
@@ -145,14 +145,19 @@ function loseFunction() {
 // RENDER FUNCTIONS //
 function render() {
     renderMines();
-    renderMarkerCount();
+    renderMarkers();
 }
 
 function renderMines() {
 
 }
 
-function renderMarkerCount() {
-    markerCounter.innerText = markerArr.length;
+
+function renderMarkers() {
+    let img = document.createElement('img')
+    img.src = imgMarker;
+    img.className = 'markerImg'
+    markerArr.forEach(elem => squaresDOMNest[elem.arr1][elem.arr2].appendChild(img))
+    markerCounter.innerText = markerArr.length; // Update marker counter
 }
 
