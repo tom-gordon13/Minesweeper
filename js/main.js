@@ -2,6 +2,12 @@
 const sqSize = 4;
 const maxSquares = 20;
 const imgMarker = 'images/flag-marker.png';
+const vicColors = {
+    1: 'blue',
+    2: 'green',
+    3: 'red',
+    4: 'darkblue',
+}
 const checkArray = [
     ['x', 'y - 1'],
     ['x', 'y + 1'],
@@ -25,19 +31,18 @@ let clickedIdx; // Object that will hold the index value of the most recently cl
 let boardDOM = document.getElementById('board');
 let squaresDOM; //cached later, after buttons are generated
 let squaresDOMNest; // Nested array of squares
-let markerCounter = document.getElementById('markerCount');
+let markerCounter = document.getElementById('markerCount'); // Marker counter in upper lefthand corner of the screen
 
 /*----- event listeners -----*/
 boardDOM.addEventListener('click', handleClick)
-
 boardDOM.addEventListener('contextmenu', handleRightClick)
 
 
 
 /*----- functions -----*/
 // TEST FUNCTIONS/VARIABLES
-let size = 15;
-let num = 50;
+let size = 20; //width of game board
+let num = 50; // number of mines
 init(size);
 
 // INITIALIZATION FUNCTIONS //
@@ -56,7 +61,7 @@ function initMarkers() {
 }
 
 function chunkSquares(size) {
-    // Turns squares DOM elements (buttons) into a nested array the same size as the board
+    // Turns 'squares' DOM elements (buttons) into a nested array the same size as the board
     squaresDOMNest = [];
     squaresDOMNew = [].concat(...squaresDOM)
 
@@ -74,7 +79,6 @@ function initBoard(size) {
 }
 
 function initMines(numMines) {
-
     mineArr = [];
     while (mineArr.length < numMines) {
         let arr1 = Math.floor(Math.random() * size);
@@ -90,17 +94,12 @@ function initMines(numMines) {
 
 
 function checkVicinity(x, y) {
-    let vicTotal = 0;
-    let sqCheck = squaresDOMNest[x][y];
-    // sqCheck.style.backgroundColor = 'green';
-    checkArray.forEach(function (elem) {
-        // Checking for edge or board cases
-        if (eval(elem[0]) < 0 || eval(elem[0]) > size - 1) return;
-        if (squaresDOMNest[eval(elem[0])][eval(elem[1])] === undefined) return;
+    let vicTotal = 0; //vicTotal === vicinity total, i.e. number of mines in adjacent squares
 
-        // if (squaresDOMNest[eval(elem[1])][eval(elem[0])] === undefined) return;
+    checkArray.forEach(function (elem) {
+        // First line adjusts for squares on the edge of board, second line checks for mines
+        if (eval(elem[0]) < 0 || eval(elem[0]) > size - 1 || squaresDOMNest[eval(elem[0])][eval(elem[1])] === undefined) return; // ignores undefined, coordinates < 0
         if (squaresDOMNest[eval(elem[0])][eval(elem[1])].class === 'mine') ++vicTotal;
-        // squaresDOMNest[eval(elem[0])][eval(elem[1])].style.backgroundColor = 'orange';
     })
     return vicTotal;
 }
@@ -149,7 +148,9 @@ function handleClick(evt) {
         clickedIdx.arr1 = Math.floor(clickedIdx.total / size)
         clickedIdx.arr2 = clickedIdx.total % size;
     }
-    evt.target.innerText = checkVicinity(clickedIdx.arr1, clickedIdx.arr2);
+    let vicTotal = checkVicinity(clickedIdx.arr1, clickedIdx.arr2)
+    evt.target.innerText = vicTotal;
+    evt.target.style.color = vicColors[vicTotal];
 
     // Remove 'clicked' id so that it does not interfere with next square clicked
     evt.target.removeAttribute('id')
