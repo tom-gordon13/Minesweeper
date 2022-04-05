@@ -12,7 +12,6 @@ let handleClick = function handleClick(evt) {
     clickedIdx = { total: null, arr1: null, arr2: null } // Reset Clicked Index object
     extractClickedIdx(evt, 'clicked'); // Extract the index of a square that was clicked
     let leftClickIdx = clickedIdx;
-
     if (boardArr[leftClickIdx.arr1][leftClickIdx.arr2]) return; // Ignore click if click index matches a marker index
     if (mineArr.some(elem => elem.total == leftClickIdx.total)) { loseFunction(); return; }; // Check if clicked button index matches the index of a mine
 

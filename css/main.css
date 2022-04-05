@@ -45,6 +45,8 @@ header {
     flex-direction: row;
     justify-content: center;
     align-items: flex-end;
+    font-size: 5vmin;
+    font-family: 'Bungee', cursive;
 }
 
 #markerCount{
@@ -55,10 +57,9 @@ header {
     height: 8vmin;
     width: 12vmin;
     color: red;
-    font-size: 6.5vmin;
-    font-family: 'Bungee', cursive;
     text-align: right;
-    margin-left: 10px
+    margin-left: 10px; 
+    font-style: inherit;
 }
 
 #timer{
@@ -69,12 +70,11 @@ header {
     height: 8vmin;
     width: 20vmin;
     color: red;
-    font-size: 6.5vmin;
-    font-family: 'Bungee', cursive;
     text-align: right;
     align-self: flex-end;
     margin-left: 40%;
     margin-right: 10px;
+    font-style: inherit;
 }
 
 #board {

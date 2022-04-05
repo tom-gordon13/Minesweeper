@@ -22,9 +22,11 @@ const checkArray = [
 
 /*----- app's state (variables) -----*/
 let mineArr;
+let clickedCounter;
 let markerArr;
 let boardArr;
 let gameState = null;
+let seconds;
 let clickedIdx = { total: null, arr1: null, arr2: null }; // Object that will hold the index value of the most recently clicked array
 
 /*----- cached element references -----*/
@@ -35,11 +37,12 @@ let squaresDOM; //cached later, after buttons are generated
 let squaresDOMNest; // Nested array of squares
 let markerCounter = document.getElementById('markerCount'); // Marker counter in upper lefthand corner of the screen
 let timerDOM = document.getElementById('timer');
+let resetDOM = document.getElementById('reset');
 
 /*----- event listeners -----*/
 boardDOM.addEventListener('click', handleClick)
 boardDOM.addEventListener('contextmenu', handleRightClick)
-
+resetDOM.addEventListener('click', handleResetClick)
 
 
 /*----- functions -----*/
@@ -50,6 +53,7 @@ init(size);
 
 // INITIALIZATION FUNCTIONS //
 function init(size) {
+    timerDOM.innerText = 0;
     gameState = null;
     initSquares(size);
     chunkSquares(size); //
@@ -65,12 +69,7 @@ function initMarkers() {
 }
 
 
-let timerID = setInterval(timerFunc, 1000);
 
-function timerFunc() {
-    let seconds = parseInt(timerDOM.innerText)
-    timerDOM.innerText = seconds + 1;
-}
 
 
 function chunkSquares(size) {
@@ -116,6 +115,8 @@ function checkVicinity(x, y) {
         // First line adjusts for squares on the edge of board, second line checks for mines
         if (eval(elem[0]) < 0 || eval(elem[0]) > size - 1 || squaresDOMNest[eval(elem[0])][eval(elem[1])] === undefined) return; // ignores undefined, coordinates < 0
         if (squaresDOMNest[eval(elem[0])][eval(elem[1])].class === 'mine') ++vicTotal;
+        // console.log(eval(elem[0]), eval(elem[1]));
+        // squaresDOMNest[eval(elem[0])][eval(elem[1])].style.backgroundColor = 'orange';
     })
     return vicTotal;
 }
@@ -126,6 +127,10 @@ function initSquares(size) {
     //Set board container size to fit squares
     containerDOM.style.width = `${size * sqSize}vmin`
     boardDOM.style.height = `${size * sqSize}vmin` //needs to be different than container because container also contains the header
+
+    // Delete all existing squares within the boardDOM element
+    const remSq = [...document.querySelectorAll('.square, .square-past-clicked')];
+    remSq.forEach(elem => { elem.remove() });
 
     // Initialize new squares based on chosen board size
     let numSquares = size ** 2;
@@ -138,7 +143,7 @@ function initSquares(size) {
         numSquares--;
     }
     // Add button elements to an array that can be queried to match with board array
-    squaresDOM = [...document.querySelectorAll('button')];
+    squaresDOM = [...document.getElementsByClassName('square')];
 }
 
 
@@ -151,6 +156,13 @@ function assignMines() {
 }
 
 
+
+let timerID = setInterval(timerFunc, 1000);
+
+function timerFunc() {
+    seconds = parseInt(timerDOM.innerText)
+    timerDOM.innerText = seconds + 1;
+}
 
 function loseFunction() {
     gameState = 'L';
@@ -185,10 +197,13 @@ function checkWin() {
         if (markerArr.some(marker => marker.total === mine.total)) matchCount += 1;
     })
     if (matchCount === size && markerArr.length === num) winFunction();
+    clickedCounter = boardArr.flat().filter(elem => Number.isInteger(elem)).length;
+    if (clickedCounter === (size * size) - num) winFunction();
 }
 
 function winFunction() {
-    alert('You win!')
+    alert('You win!');
+
 }
 
 
@@ -209,3 +224,8 @@ function renderVic() {
 
 }
 
+
+
+function handleResetClick() {
+    init(size);
+}
