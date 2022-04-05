@@ -33,6 +33,7 @@ let boardDOM = document.getElementById('board');
 let squaresDOM; //cached later, after buttons are generated
 let squaresDOMNest; // Nested array of squares
 let markerCounter = document.getElementById('markerCount'); // Marker counter in upper lefthand corner of the screen
+let timerDOM = document.getElementById('timer');
 
 /*----- event listeners -----*/
 boardDOM.addEventListener('click', handleClick)
@@ -42,8 +43,8 @@ boardDOM.addEventListener('contextmenu', handleRightClick)
 
 /*----- functions -----*/
 // TEST FUNCTIONS/VARIABLES
-let size = 10; //width of game board
-let num = 10; // number of mines
+let size = 15; //width of game board
+let num = 40; // number of mines
 init(size);
 
 // INITIALIZATION FUNCTIONS //
@@ -59,7 +60,17 @@ function init(size) {
 
 function initMarkers() {
     markerArr = [];
+    document.getElementById('markerCount').innerText = num;
 }
+
+
+let intervalID = setInterval(timerFunc, 1000);
+
+function timerFunc() {
+    let seconds = parseInt(timerDOM.innerText)
+    timerDOM.innerText = seconds + 1;
+}
+
 
 function chunkSquares(size) {
     // Turns 'squares' DOM elements (buttons) into a nested array the same size as the board
@@ -170,7 +181,7 @@ function renderMarkers() {
     markerArr.forEach(function (elem) {
         if (!squaresDOMNest[elem.arr1][elem.arr2].hasChildNodes()) squaresDOMNest[elem.arr1][elem.arr2].appendChild(img)
     })
-    markerCounter.innerText = markerArr.length; // Update marker counter
+    markerCounter.innerText = num - markerArr.length; // Update marker counter
 }
 
 
