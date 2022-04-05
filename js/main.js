@@ -1,5 +1,9 @@
 /*----- constants -----*/
-const sqSize = 4;
+const playerOptions = {
+    beginner: { size: 9, numMines: 10, sqSize: 5, fontSize: 3.35 },
+    intermediate: { size: 20, numMines: 30, sqSize: 2.5, fontSize: 2 },
+    expert: { size: 30, numMines: 80, sqSize: 2, fontSize: 1 }
+}
 const maxSquares = 20;
 const imgMarker = 'images/flag-marker.png';
 const imgMine = 'images/mine.png'
@@ -22,6 +26,7 @@ const checkArray = [
 
 /*----- app's state (variables) -----*/
 let mineArr;
+let difficulty = 'beginner';
 let clickedCounter;
 let markerArr;
 let boardArr;
@@ -47,8 +52,8 @@ resetDOM.addEventListener('click', handleResetClick)
 
 /*----- functions -----*/
 // TEST FUNCTIONS/VARIABLES
-let size = 10; //width of game board
-let num = 10; // number of mines
+let size = playerOptions[difficulty].size; //width of game board
+let num = playerOptions[difficulty].numMines; // number of mines
 init(size);
 
 // INITIALIZATION FUNCTIONS //
@@ -125,8 +130,8 @@ function checkVicinity(x, y) {
 function initSquares(size) {
 
     //Set board container size to fit squares
-    containerDOM.style.width = `${size * sqSize}vmin`
-    boardDOM.style.height = `${size * sqSize}vmin` //needs to be different than container because container also contains the header
+    containerDOM.style.width = `${size * playerOptions[difficulty].sqSize}vmin`
+    boardDOM.style.height = `${size * playerOptions[difficulty].sqSize}vmin` //needs to be different than container because container also contains the header
 
     // Delete all existing squares within the boardDOM element
     const remSq = [...document.querySelectorAll('.square, .square-past-clicked')];
@@ -137,8 +142,8 @@ function initSquares(size) {
     while (numSquares > 0) {
         let square = document.createElement('button');
         square.setAttribute('class', 'square');
-        square.style.height = `${sqSize}vmin`;
-        square.style.width = `${sqSize}vmin`;
+        square.style.height = `${playerOptions[difficulty].sqSize}vmin`;
+        square.style.width = `${playerOptions[difficulty].sqSize}vmin`;
         boardDOM.appendChild(square);
         numSquares--;
     }
@@ -196,14 +201,15 @@ function checkWin() {
     mineArr.forEach(function (mine) {
         if (markerArr.some(marker => marker.total === mine.total)) matchCount += 1;
     })
-    if (matchCount === size && markerArr.length === num) winFunction();
+    console.log(matchCount)
+    if (matchCount === num && markerArr.length === num) winFunction();
     clickedCounter = boardArr.flat().filter(elem => Number.isInteger(elem)).length;
     if (clickedCounter === (size * size) - num) winFunction();
 }
 
 function winFunction() {
     alert('You win!');
-
+    init(size);
 }
 
 
