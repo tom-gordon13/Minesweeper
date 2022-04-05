@@ -44,8 +44,8 @@ boardDOM.addEventListener('contextmenu', handleRightClick)
 
 /*----- functions -----*/
 // TEST FUNCTIONS/VARIABLES
-let size = 15; //width of game board
-let num = 40; // number of mines
+let size = 10; //width of game board
+let num = 10; // number of mines
 init(size);
 
 // INITIALIZATION FUNCTIONS //
@@ -104,7 +104,7 @@ function initMines(numMines) {
         if (mineArr.some(elem => eval(elem.arr1) === arr1 && eval(elem.arr2) === arr2)) continue;
 
         // PUSH NEWLY-CREATED MINE TO mineArr
-        mineArr.push({ name: `m${mineArr.length}`, arr1: `${arr1}`, arr2: `${arr2}`, total: `${size * arr1 + arr2}` });
+        mineArr.push({ name: `m${mineArr.length}`, arr1: arr1, arr2: arr2, total: size * arr1 + arr2 });
     }
 }
 
@@ -180,7 +180,15 @@ function renderMines(gameState) {
 }
 
 function checkWin() {
+    let matchCount = 0;
+    mineArr.forEach(function (mine) {
+        if (markerArr.some(marker => marker.total === mine.total)) matchCount += 1;
+    })
+    if (matchCount === size && markerArr.length === num) winFunction();
+}
 
+function winFunction() {
+    alert('You win!')
 }
 
 
@@ -196,4 +204,8 @@ function renderMarkers() {
     markerCounter.innerText = num - markerArr.length; // Update marker counter
 }
 
+
+function renderVic() {
+
+}
 
