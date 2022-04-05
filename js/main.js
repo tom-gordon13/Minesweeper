@@ -74,10 +74,14 @@ function chunkSquares(size) {
 }
 
 function initBoard(size) {
-    //populate board data structure based on board size
+
     boardArr = new Array(size);
-    boardArr.fill(new Array(size));
+
+    for (let i = 0; i < boardArr.length; i++) {
+        boardArr[i] = new Array(size).fill('')
+    }
 }
+
 
 function initMines(numMines) {
     mineArr = [];
@@ -85,7 +89,7 @@ function initMines(numMines) {
         let arr1 = Math.floor(Math.random() * size);
         let arr2 = Math.floor(Math.random() * size);
         //CHECK IF MINE COORDINATES ALREADY EXIST, IF YES THEN RETURN TO START_POSITION
-        if (mineArr.some(elem => elem.arr1 === arr1 && elem.arr2 === arr2)) continue;
+        if (mineArr.some(elem => eval(elem.arr1) === arr1 && eval(elem.arr2) === arr2)) continue;
 
         // PUSH NEWLY-CREATED MINE TO mineArr
         mineArr.push({ name: `m${mineArr.length}`, arr1: `${arr1}`, arr2: `${arr2}`, total: `${size * arr1 + arr2}` });
@@ -110,7 +114,6 @@ function initSquares(size) {
     //Set board container size to fit squares
     containerDOM.style.width = `${size * sqSize}vmin`
     boardDOM.style.height = `${size * sqSize}vmin` //needs to be different than container because container also contains the header
-    // boardDOM.style.width = `${size * sqSize}vmin`
 
     // Initialize new squares based on chosen board size
     let numSquares = size ** 2;
@@ -146,9 +149,14 @@ function loseFunction() {
 function render() {
     renderMines();
     renderMarkers();
+    checkWin();
 }
 
 function renderMines() {
+
+}
+
+function checkWin() {
 
 }
 
@@ -157,7 +165,9 @@ function renderMarkers() {
     let img = document.createElement('img')
     img.src = imgMarker;
     img.className = 'markerImg'
-    markerArr.forEach(elem => squaresDOMNest[elem.arr1][elem.arr2].appendChild(img))
+
+    if (markerArr.length > 0) { markerArr.forEach(elem => squaresDOMNest[elem.arr1][elem.arr2].appendChild(img)) };
     markerCounter.innerText = markerArr.length; // Update marker counter
 }
+
 

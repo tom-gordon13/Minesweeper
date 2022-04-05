@@ -3,80 +3,50 @@ function extractClickedIdx(evt, idName) {
     clickedIdx.total = squaresDOM.findIndex(square => square.id === idName);
     clickedIdx.arr1 = Math.floor(clickedIdx.total / size)
     clickedIdx.arr2 = clickedIdx.total % size;
+    evt.target.removeAttribute('id'); // Remove 'clicked' id so that it does not interfere with next square clicked
 }
 
 
 // LEFT CLICK EVENT LISTENER
 let handleClick = function handleClick(evt) {
+    clickedIdx = { total: null, arr1: null, arr2: null } // Reset Clicked Index object
+    extractClickedIdx(evt, 'clicked'); // Extract the index of a square that was clicked
 
-    clickedIdx = { total: null, arr1: null, arr2: null }
-
-    // Extract the index of a square that was clicked
-    extractClickedIdx(evt, 'clicked');
-
-    // Check if clicked button matches the index of a marker
-    if (markerArr.some(elem => elem.total === clickedIdx.total)) return;
-
-    // Check if clicked button index matches the index of a mine
-    if (mineArr.some(elem => elem.total == clickedIdx.total)) loseFunction();
-
-    if (evt.target.className === 'marker' || evt.target.className === 'past-clicked') return;
-    evt.target.id = 'clicked';
-
+    if (boardArr[clickedIdx.arr1][clickedIdx.arr2]) return; // Ignore click if click index matches a marker index
+    if (mineArr.some(elem => elem.total == clickedIdx.total)) loseFunction(); // Check if clicked button index matches the index of a mine
 
     let vicTotal = checkVicinity(clickedIdx.arr1, clickedIdx.arr2)
+    boardArr[clickedIdx.arr1][clickedIdx.arr2] = vicTotal; // add vicinity mines to boardArr
     evt.target.innerText = vicTotal;
     evt.target.style.color = vicColors[vicTotal];
 
-    // Remove 'clicked' id so that it does not interfere with next square clicked
-    evt.target.removeAttribute('id')
     evt.target.className += '-past-clicked' // Obtain "square-past-clicked" styling
 
     render();
 }
 
 
-
-
-
-
-
-
 // RIGHT CLICK EVENT LISTENER
 let handleRightClick = function handleRightClick(evt) {
-
-
     evt.preventDefault(); // Prevents default "right click" action from occuring
-    clickedIdx = { total: null, arr1: null, arr2: null }
-    if (evt.target.innerText) return; // ignores right clicks on pieces that have already been left-clicked
+    clickedIdx = { total: null, arr1: null, arr2: null } // Reset Clicked Index object
 
-    extractClickedIdx(evt, 'clicked');
-    let boardArrClick = boardArr[clickedIdx.arr1][clickedIdx.arr2]
-    if (boardArrClick === 'marker') return;
-    boardArrClick = 'marker';
+    if (evt.target.className === 'markerImg') { evt.target.parentElement.id = 'clicked' };
+    extractClickedIdx(evt, 'clicked'); // return index of element that was clicked
 
+    if (Number.isInteger(boardArr[clickedIdx.arr1][clickedIdx.arr2])) return; // ignores right clicks on pieces that have already been left-clicked
 
-    if (evt.target.className === 'markerImg') {
-        console.log(evt.target.parentElement)
-        evt.target.parentElement.className = 'square';
-
-        // If right click on a market, remove that marker from the markerArr
-        clickedIdx = { total: null, arr1: null, arr2: null };
-        evt.target.parentElement.id = 'rmv-marker';
-        clickedIdx.total = squaresDOM.findIndex(square => square.id === 'rmv-marker');
-        let idx = markerArr.findIndex(elem => elem.total = clickedIdx.total);
+    if (boardArr[clickedIdx.arr1][clickedIdx.arr2] === 'marker') {
+        boardArr[clickedIdx.arr1][clickedIdx.arr2] = '';
+        let idx = markerArr.findIndex(elem => elem.total === clickedIdx.total);
         markerArr.splice(idx, 1);
-
-        //Remove marker image
-        evt.target.remove();
-
-        renderMarkerCount();
+        let sqDOM = squaresDOMNest[clickedIdx.arr1][clickedIdx.arr2];
+        sqDOM.removeChild(sqDOM.firstElementChild);
+        render();
         return;
-    }
+    };
 
-
-    ///// EXTRACT INDEX OF CLICKED ELEMENT FROM PARENT NODE LIST, ASSIGN TO CLASS 'MARKER'
-    clickedIdx = { total: null, arr1: null, arr2: null };
+    boardArr[clickedIdx.arr1][clickedIdx.arr2] = 'marker'; // Add marker to the boardArr that was clicked
 
     extractClickedIdx(evt, 'marker');
 
