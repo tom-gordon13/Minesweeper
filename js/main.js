@@ -2,6 +2,7 @@
 const sqSize = 4;
 const maxSquares = 20;
 const imgMarker = 'images/flag-marker.png';
+const imgMine = 'images/mine.png'
 const vicColors = {
     1: 'blue',
     2: 'green',
@@ -23,7 +24,7 @@ const checkArray = [
 let mineArr;
 let markerArr;
 let boardArr;
-let gameState; // null 
+let gameState = null;
 let clickedIdx = { total: null, arr1: null, arr2: null }; // Object that will hold the index value of the most recently clicked array
 
 /*----- cached element references -----*/
@@ -64,7 +65,7 @@ function initMarkers() {
 }
 
 
-let intervalID = setInterval(timerFunc, 1000);
+let timerID = setInterval(timerFunc, 1000);
 
 function timerFunc() {
     let seconds = parseInt(timerDOM.innerText)
@@ -152,19 +153,30 @@ function assignMines() {
 
 
 function loseFunction() {
-    alert('You lose!')
-    init(size);
+    gameState = 'L';
+    squaresDOMNest[clickedIdx.arr1][clickedIdx.arr2].style.backgroundColor = 'red';
+    render();
+    // init(size);
 }
 
 // RENDER FUNCTIONS //
 function render() {
-    renderMines();
+    renderMines(gameState);
     renderMarkers();
     checkWin();
 }
 
-function renderMines() {
-
+function renderMines(gameState) {
+    if (gameState === null) return;
+    mineArr.forEach(function (elem) {
+        let img = document.createElement('img')
+        img.src = imgMine;
+        img.className = 'mineImg'
+        let sqDOM = squaresDOMNest[elem.arr1][elem.arr2];
+        // sqDOM.removeChild(sqDOM.firstElementChild); // remove marker image
+        sqDOM.appendChild(img); // add mine image
+        sqDOM.style.backgroundColor = '#E8E8E8';
+    })
 }
 
 function checkWin() {
