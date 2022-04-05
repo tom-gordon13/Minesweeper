@@ -166,7 +166,10 @@ function renderMarkers() {
     img.src = imgMarker;
     img.className = 'markerImg'
 
-    if (markerArr.length > 0) { markerArr.forEach(elem => squaresDOMNest[elem.arr1][elem.arr2].appendChild(img)) };
+    // markerArr.forEach(elem => squaresDOMNest[elem.arr1][elem.arr2].appendChild(img));
+    markerArr.forEach(function (elem) {
+        if (!squaresDOMNest[elem.arr1][elem.arr2].hasChildNodes()) squaresDOMNest[elem.arr1][elem.arr2].appendChild(img)
+    })
     markerCounter.innerText = markerArr.length; // Update marker counter
 }
 

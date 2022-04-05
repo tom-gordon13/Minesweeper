@@ -42,6 +42,7 @@ let handleRightClick = function handleRightClick(evt) {
         markerArr.splice(idx, 1);
         let sqDOM = squaresDOMNest[clickedIdx.arr1][clickedIdx.arr2];
         sqDOM.removeChild(sqDOM.firstElementChild);
+
         render();
         return;
     };
