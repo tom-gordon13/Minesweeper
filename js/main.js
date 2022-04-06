@@ -4,7 +4,6 @@ const playerOptions = {
     Intermediate: { size: 20, numMines: 50, sqSize: 2.2, fontSize: 2.5 },
     Expert: { size: 30, numMines: 150, sqSize: 1.5, fontSize: 1.75 }
 }
-const maxSquares = 20;
 const imgMarker = 'images/flag-marker.png';
 const imgMine = 'images/mine.png'
 const vicColors = {
@@ -12,6 +11,7 @@ const vicColors = {
     2: 'green',
     3: 'red',
     4: 'darkblue',
+    5: 'darkorange'
 }
 const checkArray = [
     ['x', 'y - 1'],
@@ -27,7 +27,6 @@ const checkArray = [
 /*----- app's state (variables) -----*/
 let mineArr;
 let difficulty = 'Beginner';
-let clickedCounter;
 let markerArr;
 let boardArr;
 let gameState = null;
@@ -49,7 +48,7 @@ let footerDOM = document.querySelector('footer');
 boardDOM.addEventListener('click', handleClick) // Left click event listener
 boardDOM.addEventListener('contextmenu', handleRightClick) // Right click event listener
 resetDOM.addEventListener('click', handleResetClick) // Reset button event listener
-footerDOM.addEventListener('click', handleOptClick)
+footerDOM.addEventListener('click', handleOptClick) // Buttons to change difficulty
 
 /*----- functions -----*/
 // TEST FUNCTIONS/VARIABLES
@@ -99,8 +98,7 @@ function chunkSquares(size) {
 }
 
 function initBoard(size) {
-
-    boardArr = new Array(size);
+    boardArr = new Array(size); //
 
     for (let i = 0; i < boardArr.length; i++) {
         boardArr[i] = new Array(size).fill('')
@@ -140,7 +138,6 @@ function initSquares(size) {
 
     //Set board container size to fit squares
     containerDOM.style.width = `${(playerOptions[difficulty].size * playerOptions[difficulty].sqSize) * 0.9}vmax`
-    // containerDOM.style.height = `${playerOptions[difficulty].size * playerOptions[difficulty].sqSize}vmin`
     boardDOM.style.height = `${playerOptions[difficulty].size * playerOptions[difficulty].sqSize * 0.9}vmax` //needs to be different than container because container also contains the header
 
     // Delete all existing squares within the boardDOM element
@@ -233,11 +230,25 @@ function renderMarkers() {
 }
 
 
-function renderVic() {
-
+function openBlanks(x, y) {
+    // 8 6
+    checkArray.forEach(function (elem) {
+        let sqCheck = squaresDOMNest[eval(elem[0])][eval(elem[1])]
+        if (sqCheck.class !== 'mine') {
+            let vicTotal = checkVicinity(eval(elem[0]), eval(elem[1]));
+            boardArr[eval(elem[0])][eval(elem[1])] = vicTotal;
+        }
+    })
+    render();
 }
 
-
+// function renderVic() {
+//     boardArr.forEach(function(arr){
+//         arr.forEach(function(elem) {
+//             if (Number.isInteger(elem)) squaresDOMNest
+//         })
+//     })
+// }
 
 function handleResetClick() {
     init(size);
