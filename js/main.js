@@ -248,10 +248,11 @@ function openBlanks(x, y) {
 function renderVic() {
     let x = 0;
 
-    while (x <= playerOptions[difficulty].size) {
+    while (x < playerOptions[difficulty].size) {
         let y = 0;
-        while (y <= playerOptions[difficulty].size) {
+        while (y < playerOptions[difficulty].size) {
             if (!boardArr[x][y]) { y++; continue; };
+
             if (Number.isInteger(boardArr[x][y])) squaresDOMNest[x][y].innerText = boardArr[x][y];
             squaresDOMNest[x][y].style.color = vicColors[boardArr[x][y]]
             // squaresDOMNest[x][y].className += '-past-clicked'

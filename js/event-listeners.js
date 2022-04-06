@@ -1,6 +1,5 @@
 function extractClickedIdx(evt, idName) {
     if (evt.target.id === 'board') return;
-    // if (!evt.target) return;
     evt.target.id = idName;
     clickedIdx.total = squaresDOM.findIndex(square => square.id === idName);
     clickedIdx.arr1 = Math.floor(clickedIdx.total / size)
@@ -13,7 +12,7 @@ function extractClickedIdx(evt, idName) {
 let handleClick = function handleClick(evt) {
     clickedIdx = { total: null, arr1: null, arr2: null } // Reset Clicked Index object
     extractClickedIdx(evt, 'clicked'); // Extract the index of a square that was clicked
-    if (!clickedIdx.total) return;
+    if (!Number.isInteger(clickedIdx.total)) return;
     let leftClickIdx = clickedIdx;
 
 
