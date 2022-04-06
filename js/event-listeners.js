@@ -63,9 +63,5 @@ let handleRightClick = function handleRightClick(evt) {
 function handleOptClick(evt) {
     if (evt.target.className !== 'opt-btn') return;
     difficulty = evt.target.innerText;
-    // document.getElementById('optMenu').style.visibility = 'hidden';
-    containerDOM.style.filter = 'blur(0)';
-    evt.target.parentElement.style.visibility = 'hidden';
-    // evt.target.style.visibility = 'hidden';
     init();
 }

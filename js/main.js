@@ -2,7 +2,7 @@
 const playerOptions = {
     Beginner: { size: 9, numMines: 10, sqSize: 5, fontSize: 3.5, factor: 1.3 },
     Intermediate: { size: 20, numMines: 50, sqSize: 3, fontSize: 2.5, factor: 1.235 },
-    Expert: { size: 30, numMines: 80, sqSize: 1.8, fontSize: 1.75, factor: 1.45 }
+    Expert: { size: 30, numMines: 80, sqSize: 1.8, fontSize: 1.75, factor: 1.6 }
 }
 const maxSquares = 20;
 const imgMarker = 'images/flag-marker.png';
@@ -26,7 +26,7 @@ const checkArray = [
 
 /*----- app's state (variables) -----*/
 let mineArr;
-let difficulty;
+let difficulty = 'Beginner';
 let clickedCounter;
 let markerArr;
 let boardArr;
@@ -43,19 +43,19 @@ let squaresDOMNest; // Nested array of squares
 let markerCounter = document.getElementById('markerCount'); // Marker counter in upper lefthand corner of the screen
 let timerDOM = document.getElementById('timer');
 let resetDOM = document.getElementById('reset');
-let optDOM = document.getElementById('optMenu');
+let footerDOM = document.querySelector('footer');
 
 /*----- event listeners -----*/
 boardDOM.addEventListener('click', handleClick) // Left click event listener
 boardDOM.addEventListener('contextmenu', handleRightClick) // Right click event listener
 resetDOM.addEventListener('click', handleResetClick) // Reset button event listener
-optDOM.addEventListener('click', handleOptClick)
+footerDOM.addEventListener('click', handleOptClick)
 
 /*----- functions -----*/
 // TEST FUNCTIONS/VARIABLES
 let size;
 let num;
-
+init();
 
 // INITIALIZATION FUNCTIONS //
 function init() {

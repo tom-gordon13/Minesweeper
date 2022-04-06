@@ -13,6 +13,7 @@
 
 body {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
@@ -29,7 +30,6 @@ container {
     justify-content: flex-start;
     align-items: center;
     flex-wrap: wrap;
-    filter: blur(5px);
     /* grid-template-rows: 10vh, 1fr; */
     /* border: 5px solid black; */
 }
@@ -177,7 +177,7 @@ button {
     position: absolute;
     top: 5vmin;
     left: 20vw;
-    /* visibility: visible; */
+    visibility: hidden;
     border: none;
 }
 
@@ -193,6 +193,11 @@ p {
     display: inline;
     font-size: 5vmin;
     margin: 0;
+}
+
+footer {
+    margin-top: 1%;
+    align-self: center;
 }
 
 
