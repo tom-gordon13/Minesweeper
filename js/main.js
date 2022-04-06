@@ -1,6 +1,6 @@
 /*----- constants -----*/
 const playerOptions = {
-    Beginner: { size: 9, numMines: 10, sqSize: 4, fontSize: 4.5, imgSize: 65 },
+    Beginner: { size: 9, numMines: 15, sqSize: 4, fontSize: 4.5, imgSize: 65 },
     Intermediate: { size: 20, numMines: 70, sqSize: 2.2, fontSize: 2.5, imgSize: 85 },
     Expert: { size: 30, numMines: 150, sqSize: 1.5, fontSize: 1.75, imgSize: 100 }
 }
@@ -183,7 +183,7 @@ function assignMines() {
     mineArr.forEach(function (mine) {
         squaresDOMNest[mine.arr1][mine.arr2].class = 'mine';
         boardArr[mine.arr1][mine.arr2] = 'mine'
-        squaresDOMNest[mine.arr1][mine.arr2].style.backgroundColor = 'red';
+        // squaresDOMNest[mine.arr1][mine.arr2].style.backgroundColor = 'red';
     })
 }
 
@@ -251,8 +251,6 @@ function checkWin() {
 function winFunction() {
     gameState = 'W';
     renderFace(gameState);
-    // alert('You win!');
-    // init(size);
 }
 
 

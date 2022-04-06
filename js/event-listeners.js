@@ -10,6 +10,7 @@ function extractClickedIdx(evt, idName) {
 
 // LEFT CLICK EVENT LISTENER
 let handleClick = function handleClick(evt) {
+    if (gameState) return;
     clickedIdx = { total: null, arr1: null, arr2: null } // Reset Clicked Index object
     extractClickedIdx(evt, 'clicked'); // Extract the index of a square that was clicked
 
@@ -42,7 +43,7 @@ let handleRightClick = function handleRightClick(evt) {
     extractClickedIdx(evt, 'clicked'); // return index of element that was clicked
     let rightClickIdx = clickedIdx;
 
-    if (Number.isInteger(boardArr[rightClickIdx.arr1][rightClickIdx.arr2])) return; // ignores right clicks on pieces that have already been left-clicked
+    if (squaresDOMNest[rightClickIdx.arr1][rightClickIdx.arr2].className === 'square-past-clicked') return; // ignores right clicks on pieces that have already been left-clicked
 
     if (boardArr[rightClickIdx.arr1][rightClickIdx.arr2] === 'marker') {
         boardArr[rightClickIdx.arr1][rightClickIdx.arr2] = '';
