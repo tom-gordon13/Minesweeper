@@ -31,7 +31,7 @@ let clickedCounter;
 let markerArr;
 let boardArr;
 let gameState = null;
-let seconds;
+let timerRef;
 let clickedIdx = { total: null, arr1: null, arr2: null }; // Object that will hold the index value of the most recently clicked array
 
 /*----- cached element references -----*/
@@ -69,12 +69,9 @@ function init() {
     initMines(num); //
     assignMines(); //
     initMarkers(); //
-    let timerID = setInterval(timerFunc, 1000);
+    clearInterval(timerRef)
+    timerRef = setInterval(timerFunc, 1000);
 
-    function timerFunc() {
-        seconds = parseInt(timerDOM.innerText)
-        timerDOM.innerText = seconds + 1;
-    }
 }
 
 function initMarkers() {
@@ -83,7 +80,10 @@ function initMarkers() {
 }
 
 
-
+function timerFunc() {
+    seconds = parseInt(timerDOM.innerText);
+    timerDOM.innerText = seconds + 1;
+}
 
 
 function chunkSquares(size) {
