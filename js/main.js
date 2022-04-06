@@ -1,8 +1,8 @@
 /*----- constants -----*/
 const playerOptions = {
-    Beginner: { size: 9, numMines: 10, sqSize: 5, fontSize: 3.5, factor: 1.3 },
-    Intermediate: { size: 20, numMines: 50, sqSize: 3, fontSize: 2.5, factor: 1.235 },
-    Expert: { size: 30, numMines: 80, sqSize: 1.8, fontSize: 1.75, factor: 1.6 }
+    Beginner: { size: 9, numMines: 10, sqSize: 4, fontSize: 4.5 },
+    Intermediate: { size: 20, numMines: 50, sqSize: 2.2, fontSize: 2.5 },
+    Expert: { size: 30, numMines: 150, sqSize: 1.5, fontSize: 1.75 }
 }
 const maxSquares = 20;
 const imgMarker = 'images/flag-marker.png';
@@ -139,9 +139,9 @@ function checkVicinity(x, y) {
 function initSquares(size) {
 
     //Set board container size to fit squares
-    containerDOM.style.width = `${(size * playerOptions[difficulty].sqSize) * 1.05}vmin`
-    containerDOM.style.height = `${size * playerOptions[difficulty].sqSize * playerOptions[difficulty].factor}vmin`
-    boardDOM.style.height = `${size * playerOptions[difficulty].sqSize}vmin` //needs to be different than container because container also contains the header
+    containerDOM.style.width = `${(playerOptions[difficulty].size * playerOptions[difficulty].sqSize) * 0.9}vmax`
+    // containerDOM.style.height = `${playerOptions[difficulty].size * playerOptions[difficulty].sqSize}vmin`
+    boardDOM.style.height = `${playerOptions[difficulty].size * playerOptions[difficulty].sqSize * 0.9}vmax` //needs to be different than container because container also contains the header
 
     // Delete all existing squares within the boardDOM element
     const remSq = [...document.querySelectorAll('.square, .square-past-clicked')];
@@ -152,8 +152,8 @@ function initSquares(size) {
     while (numSquares > 0) {
         let square = document.createElement('button');
         square.setAttribute('class', 'square');
-        square.style.height = `${playerOptions[difficulty].sqSize}vmin`;
-        square.style.width = `${playerOptions[difficulty].sqSize}vmin`;
+        square.style.height = `${100 / playerOptions[difficulty].size}%`;
+        square.style.width = `${100 / playerOptions[difficulty].size}%`;
         square.style.fontSize = `${playerOptions[difficulty].fontSize}vmin`;
         boardDOM.appendChild(square);
         numSquares--;

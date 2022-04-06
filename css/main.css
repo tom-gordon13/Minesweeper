@@ -24,7 +24,7 @@ container {
     border: 5px solid rgb(113, 126, 139);
     border-left: 3px solid rgb(216, 213, 213);
     border-top: 3px solid rgb(216, 213, 213);
-    margin-top: 4vh;
+    margin-top: 2vh;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -144,13 +144,13 @@ button {
 }
 
 .markerImg {
-    height: 20px;
-    width: 20px;
+    height: 65%;
+    width: 65%;
 }
 
 .mineImg {
-    height: 20px;
-    width: 20px;
+    height: 65%;
+    width: 65%;
 }
 
 
@@ -166,38 +166,33 @@ button {
     font-size: 5vmin;
 }
 
-#optMenu {
-    background-color: slategray;
-    font-size: 5vmin;
-    height: 60vh;
-    width: 60vw;
-    color: beige;
-    align-self: inline-block;
-    z-index: 9;
-    position: absolute;
-    top: 5vmin;
-    left: 20vw;
-    visibility: hidden;
-    border: none;
-}
 
-h2, h3, p {
-    text-align: center;
-}
 
-.opt-btn{
-    display: inline;
-}
-
-p {
-    display: inline;
-    font-size: 5vmin;
-    margin: 0;
-}
 
 footer {
     margin-top: 1%;
+    width: 35vw;
+    font-size: 2.5vmin;
+    
     align-self: center;
+    background-Color: rgb(153, 172, 192);
+    border: 5px solid rgb(113, 126, 139);
+    border-left: 3px solid rgb(216, 213, 213);
+    border-top: 3px solid rgb(216, 213, 213);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 
+
+footer > .opt-btn{
+    display: inline;
+    
+    font-size: 2.5vmin;
+    background-color: rgb(183, 203, 224);
+    border: 3px solid rgb(77, 88, 100);
+    border-left: 3px solid white;
+    border-top: 3px solid white;
+    margin: 1%;
+}
