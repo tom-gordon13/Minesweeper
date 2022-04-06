@@ -18,14 +18,16 @@ let handleClick = function handleClick(evt) {
 
 
     if (leftClickIdx.total === -1) return;
-    if (boardArr[leftClickIdx.arr1][leftClickIdx.arr2]) return; // Ignore click if click index matches a marker index
+    if (boardArr[leftClickIdx.arr1][leftClickIdx.arr2] === 'marker') return; // Ignore click if click index matches a marker index
     if (mineArr.some(elem => elem.total == leftClickIdx.total)) { loseFunction(); return; }; // Check if clicked button index matches the index of a mine
 
     let vicTotal = checkVicinity(leftClickIdx.arr1, leftClickIdx.arr2)
     boardArr[leftClickIdx.arr1][leftClickIdx.arr2] = vicTotal; // add vicinity mines to boardArr
 
+    // if (vicTotal === 0) openBlanks(leftClickIdx.arr1, leftClickIdx.arr2);
 
-    evt.target.className += '-past-clicked' // Obtain "square-past-clicked" styling
+
+    if (evt.target.className === 'square') evt.target.className += '-past-clicked' // Obtain "square-past-clicked" styling
 
     render();
 }

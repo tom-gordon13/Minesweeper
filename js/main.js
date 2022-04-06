@@ -37,6 +37,7 @@ let boardArr;
 let gameState = null;
 let timerRef;
 let clickedIdx = { total: null, arr1: null, arr2: null }; // Object that will hold the index value of the most recently clicked array
+let vicTotal;
 
 /*----- cached element references -----*/
 //grab board, will be used to create squares
@@ -74,10 +75,20 @@ function init() {
     initMines(num); //
     assignMines(); //
     initMarkers(); //
+    assignVic();
     render();
     clearInterval(timerRef)
     timerRef = setInterval(timerFunc, 1000);
 
+}
+
+function assignVic() {
+    boardArr.forEach(function (arr, idx1) {
+        arr.forEach(function (elem, idx2) {
+            checkVicinity(idx1, idx2);
+            if (boardArr[idx1][idx2] === '') boardArr[idx1][idx2] = vicTotal;
+        })
+    })
 }
 
 function initMarkers() {
@@ -129,7 +140,7 @@ function initMines(numMines) {
 
 
 function checkVicinity(x, y) {
-    let vicTotal = 0; //vicTotal === vicinity total, i.e. number of mines in adjacent squares
+    vicTotal = 0; //vicTotal === vicinity total, i.e. number of mines in adjacent squares
 
     checkArray.forEach(function (elem) {
         // First line adjusts for squares on the edge of board, second line checks for mines
@@ -171,6 +182,7 @@ function assignMines() {
     // Assign mines to the board element, MAY BE ABLE TO REMOVE THIS FUNCTION
     mineArr.forEach(function (mine) {
         squaresDOMNest[mine.arr1][mine.arr2].class = 'mine';
+        boardArr[mine.arr1][mine.arr2] = 'mine'
         squaresDOMNest[mine.arr1][mine.arr2].style.backgroundColor = 'red';
     })
 }
@@ -198,6 +210,12 @@ function render() {
     if (gameState) clearInterval(timerRef); // Pauses timer if game is won or lost
 }
 
+function renderSquares() {
+    boardArr.forEach(function (elem, idx) {
+        if (Number.isInteger(elem)) squaresDOM
+    })
+}
+
 function renderFace(gameState) {
     if (!gameState) smileyDOM.src = smiley[0];
     if (gameState === 'W') smileyDOM.src = smiley[2];
@@ -205,7 +223,7 @@ function renderFace(gameState) {
 }
 
 function renderMines(gameState) {
-    if (gameState === null) return;
+    if (gameState !== 'L') return;
     mineArr.forEach(function (elem) {
         let img = document.createElement('img')
         img.src = imgMine;
@@ -215,7 +233,7 @@ function renderMines(gameState) {
         let sqDOM = squaresDOMNest[elem.arr1][elem.arr2];
         // sqDOM.removeChild(sqDOM.firstElementChild); // remove marker image
         if (boardArr[elem.arr1][elem.arr2] !== 'marker') sqDOM.appendChild(img); // add mine image
-        sqDOM.style.backgroundColor = '#E8E8E8';
+        sqDOM.style.backgroundColor = 'red';
     })
 }
 
@@ -226,7 +244,7 @@ function checkWin() {
     })
 
     if (matchCount === num && markerArr.length === num) winFunction();
-    clickedCounter = boardArr.flat().filter(elem => Number.isInteger(elem)).length;
+    clickedCounter = squaresDOMNest.flat().filter(elem => elem.className === 'square-past-clicked').length;
     if (clickedCounter === (size * size) - num) winFunction();
 }
 
@@ -255,33 +273,47 @@ function renderMarkers() {
 
 function openBlanks(x, y) {
 
-    checkArray.forEach(function (elem) {
-        let sqCheck = squaresDOMNest[eval(elem[0])][eval(elem[1])]
-
-        if (sqCheck.className !== 'mine') {
-            let vicTotal = checkVicinity(eval(elem[0]), eval(elem[1]));
-            boardArr[eval(elem[0])][eval(elem[1])] = vicTotal;
-            if (vicTotal === 0) openBlanks(eval(elem[0]), eval(elem[1]));
+    i = 0;
+    while (i <= playerOptions[difficulty].size) {
+        if (i > x || boardArr[i][y] === 0) {
+            if (typeof boardArr[i][y] === 'string' && boardArr[i][y].length > 0) break;
+            if (boardArr[i][y] !== 'mine') checkVicinity(i, y);
+            if (i < x && vicTotal > 0) continue;
+            boardArr[i][y] = vicTotal;
+            squaresDOMNest[i][y].className += '-past-clicked';
+            if (boardArr[i][y] > 0) break;
         }
-    })
-    render();
+        ++i;
+    }
 }
 
 function renderVic() {
-    let x = 0;
+    // let x = 0;
 
-    while (x < playerOptions[difficulty].size) {
-        let y = 0;
-        while (y < playerOptions[difficulty].size) {
-            if (!boardArr[x][y]) { y++; continue; };
+    squaresDOMNest.forEach(function (arr, idx1) {
+        arr.forEach(function (elem, idx2) {
+            if (elem.className === 'square-past-clicked') {
+                if (!boardArr[idx1][idx2]) { return; }
+                squaresDOMNest[idx1][idx2].innerText = boardArr[idx1][idx2];
+                squaresDOMNest[idx1][idx2].style.color = vicColors[boardArr[idx1][idx2]]
 
-            if (Number.isInteger(boardArr[x][y])) squaresDOMNest[x][y].innerText = boardArr[x][y];
-            squaresDOMNest[x][y].style.color = vicColors[boardArr[x][y]]
-            // squaresDOMNest[x][y].className += '-past-clicked'
-            y++;
-        }
-        x++;
-    }
+
+            }
+        })
+    })
+
+    // while (x < playerOptions[difficulty].size) {
+    //     let y = 0;
+    //     while (y < playerOptions[difficulty].size) {
+    //         if (!boardArr[x][y]) { y++; continue; };
+
+    //         if (Number.isInteger(boardArr[x][y])) squaresDOMNest[x][y].innerText = boardArr[x][y];
+    //         squaresDOMNest[x][y].style.color = vicColors[boardArr[x][y]]
+    //         // squaresDOMNest[x][y].className += '-past-clicked'
+    //         y++;
+    //     }
+    //     x++;
+    // }
 }
 
 function handleResetClick() {
