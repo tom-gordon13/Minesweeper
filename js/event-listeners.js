@@ -1,4 +1,6 @@
 function extractClickedIdx(evt, idName) {
+    if (evt.target.id === 'board') return;
+    // if (!evt.target) return;
     evt.target.id = idName;
     clickedIdx.total = squaresDOM.findIndex(square => square.id === idName);
     clickedIdx.arr1 = Math.floor(clickedIdx.total / size)
@@ -11,15 +13,17 @@ function extractClickedIdx(evt, idName) {
 let handleClick = function handleClick(evt) {
     clickedIdx = { total: null, arr1: null, arr2: null } // Reset Clicked Index object
     extractClickedIdx(evt, 'clicked'); // Extract the index of a square that was clicked
+    if (!clickedIdx.total) return;
     let leftClickIdx = clickedIdx;
 
+
+    if (leftClickIdx.total === -1) return;
     if (boardArr[leftClickIdx.arr1][leftClickIdx.arr2]) return; // Ignore click if click index matches a marker index
     if (mineArr.some(elem => elem.total == leftClickIdx.total)) { loseFunction(); return; }; // Check if clicked button index matches the index of a mine
 
     let vicTotal = checkVicinity(leftClickIdx.arr1, leftClickIdx.arr2)
     boardArr[leftClickIdx.arr1][leftClickIdx.arr2] = vicTotal; // add vicinity mines to boardArr
-    evt.target.innerText = vicTotal;
-    evt.target.style.color = vicColors[vicTotal];
+
 
     evt.target.className += '-past-clicked' // Obtain "square-past-clicked" styling
 

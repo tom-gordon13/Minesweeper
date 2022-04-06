@@ -106,8 +106,6 @@ header {
     flex-wrap: wrap;
     flex-direction: flex-start;
     grid-template-columns: 2 / span 1;
-    /* height: var(--container-width); */
-    /* width: var(--container-width); */
 }
 
 #board > .square {
@@ -124,9 +122,6 @@ header {
 .mine {
     height: 7px; 
     width: 7px;
-    /* border-radius: 50%; */
-    /* background-color: red; */
-    
 }
 
 .past-clicked{
@@ -189,12 +184,10 @@ footer {
 
 footer > .opt-btn{
     display: inline;
-    
     font-size: 1.75vmin;
     background-color: rgb(183, 203, 224);
     border: 3px solid rgb(77, 88, 100);
     border-left: 3px solid white;
     border-top: 3px solid white;
     margin: 1%;
-    
 }

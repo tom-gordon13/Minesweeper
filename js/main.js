@@ -127,8 +127,6 @@ function checkVicinity(x, y) {
         // First line adjusts for squares on the edge of board, second line checks for mines
         if (eval(elem[0]) < 0 || eval(elem[0]) > size - 1 || squaresDOMNest[eval(elem[0])][eval(elem[1])] === undefined) return; // ignores undefined, coordinates < 0
         if (squaresDOMNest[eval(elem[0])][eval(elem[1])].class === 'mine') ++vicTotal;
-        // console.log(eval(elem[0]), eval(elem[1]));
-        // squaresDOMNest[eval(elem[0])][eval(elem[1])].style.backgroundColor = 'orange';
     })
     return vicTotal;
 }
@@ -138,6 +136,7 @@ function initSquares(size) {
 
     //Set board container size to fit squares
     containerDOM.style.width = `${(playerOptions[difficulty].size * playerOptions[difficulty].sqSize) * 0.9}vmax`
+    // boardDOM.style.minWidth = `${(playerOptions[difficulty].size * playerOptions[difficulty].sqSize) * 0.9}vmax`
     boardDOM.style.height = `${playerOptions[difficulty].size * playerOptions[difficulty].sqSize * 0.9}vmax` //needs to be different than container because container also contains the header
 
     // Delete all existing squares within the boardDOM element
@@ -184,6 +183,7 @@ function loseFunction() {
 function render() {
     renderMines(gameState);
     renderMarkers();
+    renderVic();
     checkWin();
 }
 
@@ -205,7 +205,7 @@ function checkWin() {
     mineArr.forEach(function (mine) {
         if (markerArr.some(marker => marker.total === mine.total)) matchCount += 1;
     })
-    console.log(matchCount)
+
     if (matchCount === num && markerArr.length === num) winFunction();
     clickedCounter = boardArr.flat().filter(elem => Number.isInteger(elem)).length;
     if (clickedCounter === (size * size) - num) winFunction();
@@ -231,24 +231,35 @@ function renderMarkers() {
 
 
 function openBlanks(x, y) {
-    // 8 6
+
     checkArray.forEach(function (elem) {
         let sqCheck = squaresDOMNest[eval(elem[0])][eval(elem[1])]
-        if (sqCheck.class !== 'mine') {
+        console.log(squaresDOMNest[eval(elem[0])][eval(elem[1])])
+
+        if (sqCheck.className !== 'mine') {
             let vicTotal = checkVicinity(eval(elem[0]), eval(elem[1]));
             boardArr[eval(elem[0])][eval(elem[1])] = vicTotal;
+            if (vicTotal === 0) openBlanks(eval(elem[0]), eval(elem[1]));
         }
     })
     render();
 }
 
-// function renderVic() {
-//     boardArr.forEach(function(arr){
-//         arr.forEach(function(elem) {
-//             if (Number.isInteger(elem)) squaresDOMNest
-//         })
-//     })
-// }
+function renderVic() {
+    let x = 0;
+
+    while (x <= playerOptions[difficulty].size) {
+        let y = 0;
+        while (y <= playerOptions[difficulty].size) {
+            if (!boardArr[x][y]) { y++; continue; };
+            if (Number.isInteger(boardArr[x][y])) squaresDOMNest[x][y].innerText = boardArr[x][y];
+            squaresDOMNest[x][y].style.color = vicColors[boardArr[x][y]]
+            // squaresDOMNest[x][y].className += '-past-clicked'
+            y++;
+        }
+        x++;
+    }
+}
 
 function handleResetClick() {
     init(size);
