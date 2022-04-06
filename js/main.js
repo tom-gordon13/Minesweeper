@@ -1,8 +1,8 @@
 /*----- constants -----*/
 const playerOptions = {
-    beginner: { size: 9, numMines: 10, sqSize: 5, fontSize: 3.35 },
-    intermediate: { size: 20, numMines: 30, sqSize: 2.5, fontSize: 2 },
-    expert: { size: 30, numMines: 80, sqSize: 2, fontSize: 1 }
+    Beginner: { size: 9, numMines: 10, sqSize: 5, fontSize: 3.5, factor: 1.3 },
+    Intermediate: { size: 20, numMines: 50, sqSize: 3, fontSize: 2.5, factor: 1.235 },
+    Expert: { size: 30, numMines: 80, sqSize: 1.8, fontSize: 1.75, factor: 1.45 }
 }
 const maxSquares = 20;
 const imgMarker = 'images/flag-marker.png';
@@ -26,7 +26,7 @@ const checkArray = [
 
 /*----- app's state (variables) -----*/
 let mineArr;
-let difficulty = 'beginner';
+let difficulty;
 let clickedCounter;
 let markerArr;
 let boardArr;
@@ -43,21 +43,24 @@ let squaresDOMNest; // Nested array of squares
 let markerCounter = document.getElementById('markerCount'); // Marker counter in upper lefthand corner of the screen
 let timerDOM = document.getElementById('timer');
 let resetDOM = document.getElementById('reset');
+let optDOM = document.getElementById('optMenu');
 
 /*----- event listeners -----*/
-boardDOM.addEventListener('click', handleClick)
-boardDOM.addEventListener('contextmenu', handleRightClick)
-resetDOM.addEventListener('click', handleResetClick)
-
+boardDOM.addEventListener('click', handleClick) // Left click event listener
+boardDOM.addEventListener('contextmenu', handleRightClick) // Right click event listener
+resetDOM.addEventListener('click', handleResetClick) // Reset button event listener
+optDOM.addEventListener('click', handleOptClick)
 
 /*----- functions -----*/
 // TEST FUNCTIONS/VARIABLES
-let size = playerOptions[difficulty].size; //width of game board
-let num = playerOptions[difficulty].numMines; // number of mines
-init(size);
+let size;
+let num;
+
 
 // INITIALIZATION FUNCTIONS //
-function init(size) {
+function init() {
+    size = playerOptions[difficulty].size; //width of game board
+    num = playerOptions[difficulty].numMines; // number of mines
     timerDOM.innerText = 0;
     gameState = null;
     initSquares(size);
@@ -66,6 +69,12 @@ function init(size) {
     initMines(num); //
     assignMines(); //
     initMarkers(); //
+    let timerID = setInterval(timerFunc, 1000);
+
+    function timerFunc() {
+        seconds = parseInt(timerDOM.innerText)
+        timerDOM.innerText = seconds + 1;
+    }
 }
 
 function initMarkers() {
@@ -130,7 +139,8 @@ function checkVicinity(x, y) {
 function initSquares(size) {
 
     //Set board container size to fit squares
-    containerDOM.style.width = `${size * playerOptions[difficulty].sqSize}vmin`
+    containerDOM.style.width = `${(size * playerOptions[difficulty].sqSize) * 1.05}vmin`
+    containerDOM.style.height = `${size * playerOptions[difficulty].sqSize * playerOptions[difficulty].factor}vmin`
     boardDOM.style.height = `${size * playerOptions[difficulty].sqSize}vmin` //needs to be different than container because container also contains the header
 
     // Delete all existing squares within the boardDOM element
@@ -144,6 +154,7 @@ function initSquares(size) {
         square.setAttribute('class', 'square');
         square.style.height = `${playerOptions[difficulty].sqSize}vmin`;
         square.style.width = `${playerOptions[difficulty].sqSize}vmin`;
+        square.style.fontSize = `${playerOptions[difficulty].fontSize}vmin`;
         boardDOM.appendChild(square);
         numSquares--;
     }
@@ -162,16 +173,12 @@ function assignMines() {
 
 
 
-let timerID = setInterval(timerFunc, 1000);
 
-function timerFunc() {
-    seconds = parseInt(timerDOM.innerText)
-    timerDOM.innerText = seconds + 1;
-}
 
 function loseFunction() {
     gameState = 'L';
     squaresDOMNest[clickedIdx.arr1][clickedIdx.arr2].style.backgroundColor = 'red';
+    console.log(squaresDOMNest[clickedIdx.arr1][clickedIdx.arr2].style.backgroundColor);
     render();
     // init(size);
 }
@@ -191,7 +198,7 @@ function renderMines(gameState) {
         img.className = 'mineImg'
         let sqDOM = squaresDOMNest[elem.arr1][elem.arr2];
         // sqDOM.removeChild(sqDOM.firstElementChild); // remove marker image
-        sqDOM.appendChild(img); // add mine image
+        if (boardArr[elem.arr1][elem.arr2] !== 'marker') sqDOM.appendChild(img); // add mine image
         sqDOM.style.backgroundColor = '#E8E8E8';
     })
 }

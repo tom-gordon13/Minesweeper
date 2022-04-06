@@ -18,29 +18,33 @@ body {
 }
 
 container {
-    /* height: 70vh; */
-    /* width: var(--container-width); */
-    margin-top: 5vh;
+    background-Color: rgb(153, 172, 192);
+    height: 100%;
+    border: 5px solid rgb(113, 126, 139);
+    border-left: 3px solid rgb(216, 213, 213);
+    border-top: 3px solid rgb(216, 213, 213);
+    margin-top: 4vh;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     flex-wrap: wrap;
+    filter: blur(5px);
     /* grid-template-rows: 10vh, 1fr; */
     /* border: 5px solid black; */
 }
 
 header {
     grid-template-rows: span 1;
-    background: slategray;
+    background-Color: slategray;
     border: 5px solid rgb(70, 80, 90);
     border-left: 3px solid rgb(216, 213, 213);
     border-top: 3px solid rgb(216, 213, 213);
-    margin: 5px;
+    margin: 1%;
     padding: 5px;
     align-self: flex-start;
     height: var(--header-height);
-    width: 100%;
+    width: 98%;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -94,6 +98,9 @@ header {
 }
 
 #board {
+    width: 98%;
+    height: 100%;
+    margin: 1%;
     display: flex;
     flex-wrap: wrap;
     flex-direction: flex-start;
@@ -103,8 +110,7 @@ header {
 }
 
 #board > .square {
-    height: 10px; 
-    width: 10px;
+    
     background-color: slategray;
     border: 3px solid rgb(77, 88, 100);
     border-left: 3px solid white;
@@ -124,6 +130,9 @@ header {
 
 .past-clicked{
     background-color:  #E8E8E8;
+    border: 3px solid #bd2e2e;
+    height: 100%;
+    width: 100%;
 }
 
 button {
@@ -156,4 +165,34 @@ button {
     margin: 0;
     font-size: 5vmin;
 }
+
+#optMenu {
+    background-color: slategray;
+    font-size: 5vmin;
+    height: 60vh;
+    width: 60vw;
+    color: beige;
+    align-self: inline-block;
+    z-index: 9;
+    position: absolute;
+    top: 5vmin;
+    left: 20vw;
+    /* visibility: visible; */
+    border: none;
+}
+
+h2, h3, p {
+    text-align: center;
+}
+
+.opt-btn{
+    display: inline;
+}
+
+p {
+    display: inline;
+    font-size: 5vmin;
+    margin: 0;
+}
+
 
