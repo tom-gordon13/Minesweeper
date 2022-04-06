@@ -1,11 +1,11 @@
 /*----- constants -----*/
 const playerOptions = {
-    Beginner: { size: 9, numMines: 10, sqSize: 4, fontSize: 4.5 },
-    Intermediate: { size: 20, numMines: 70, sqSize: 2.2, fontSize: 2.5 },
-    Expert: { size: 30, numMines: 150, sqSize: 1.5, fontSize: 1.75 }
+    Beginner: { size: 9, numMines: 10, sqSize: 4, fontSize: 4.5, imgSize: 65 },
+    Intermediate: { size: 20, numMines: 70, sqSize: 2.2, fontSize: 2.5, imgSize: 85 },
+    Expert: { size: 30, numMines: 150, sqSize: 1.5, fontSize: 1.75, imgSize: 100 }
 }
-const imgMarker = 'images/flag-marker.png';
-const imgMine = 'images/mine.png'
+const imgMarker = 'images/flag-marker-2.png';
+const imgMine = 'images/mine-2.png'
 const vicColors = {
     1: 'blue',
     2: 'green',
@@ -23,6 +23,11 @@ const checkArray = [
     ['x + 1', 'y'],
     ['x + 1', 'y + 1']
 ]
+const smiley = {
+    0: 'images/smiley.png',
+    1: 'images/smiley-sad.png',
+    2: 'images/smiley-sunglasses.png'
+}
 
 /*----- app's state (variables) -----*/
 let mineArr;
@@ -43,6 +48,7 @@ let markerCounter = document.getElementById('markerCount'); // Marker counter in
 let timerDOM = document.getElementById('timer');
 let resetDOM = document.getElementById('reset');
 let footerDOM = document.querySelector('footer');
+let smileyDOM = document.getElementById('smiley')
 
 /*----- event listeners -----*/
 boardDOM.addEventListener('click', handleClick) // Left click event listener
@@ -68,6 +74,7 @@ function init() {
     initMines(num); //
     assignMines(); //
     initMarkers(); //
+    render();
     clearInterval(timerRef)
     timerRef = setInterval(timerFunc, 1000);
 
@@ -82,6 +89,7 @@ function initMarkers() {
 function timerFunc() {
     seconds = parseInt(timerDOM.innerText);
     timerDOM.innerText = seconds + 1;
+
 }
 
 
@@ -174,7 +182,8 @@ function assignMines() {
 function loseFunction() {
     gameState = 'L';
     squaresDOMNest[clickedIdx.arr1][clickedIdx.arr2].style.backgroundColor = 'red';
-    console.log(squaresDOMNest[clickedIdx.arr1][clickedIdx.arr2].style.backgroundColor);
+    document.getElementById('smiley').src = smiley[1]
+
     render();
     // init(size);
 }
@@ -182,9 +191,17 @@ function loseFunction() {
 // RENDER FUNCTIONS //
 function render() {
     renderMines(gameState);
+    renderFace(gameState);
     renderMarkers();
     renderVic();
     checkWin();
+    if (gameState) clearInterval(timerRef); // Pauses timer if game is won or lost
+}
+
+function renderFace(gameState) {
+    if (!gameState) smileyDOM.src = smiley[0];
+    if (gameState === 'W') smileyDOM.src = smiley[2];
+    if (gameState === 'L') smileyDOM.src = smiley[1];
 }
 
 function renderMines(gameState) {
@@ -193,6 +210,8 @@ function renderMines(gameState) {
         let img = document.createElement('img')
         img.src = imgMine;
         img.className = 'mineImg'
+        img.style.height = `${playerOptions[difficulty].imgSize}%`;
+        img.style.width = `${playerOptions[difficulty].imgSize}%`;
         let sqDOM = squaresDOMNest[elem.arr1][elem.arr2];
         // sqDOM.removeChild(sqDOM.firstElementChild); // remove marker image
         if (boardArr[elem.arr1][elem.arr2] !== 'marker') sqDOM.appendChild(img); // add mine image
@@ -212,13 +231,17 @@ function checkWin() {
 }
 
 function winFunction() {
-    alert('You win!');
-    init(size);
+    gameState = 'W';
+    renderFace(gameState);
+    // alert('You win!');
+    // init(size);
 }
 
 
 function renderMarkers() {
     let img = document.createElement('img')
+    img.style.height = `${playerOptions[difficulty].imgSize}%`;
+    img.style.width = `${playerOptions[difficulty].imgSize}%`;
     img.src = imgMarker;
     img.className = 'markerImg'
 

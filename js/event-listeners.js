@@ -12,6 +12,7 @@ function extractClickedIdx(evt, idName) {
 let handleClick = function handleClick(evt) {
     clickedIdx = { total: null, arr1: null, arr2: null } // Reset Clicked Index object
     extractClickedIdx(evt, 'clicked'); // Extract the index of a square that was clicked
+
     if (!Number.isInteger(clickedIdx.total)) return;
     let leftClickIdx = clickedIdx;
 

@@ -16,6 +16,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    background-color: rgb(223, 223, 223);
 }
 
 container {
@@ -30,9 +31,7 @@ container {
     justify-content: flex-start;
     align-items: center;
     flex-wrap: wrap;
-    box-shadow: 5px slategray;
-    /* grid-template-rows: 10vh, 1fr; */
-    /* border: 5px solid black; */
+    box-shadow: 5px 5px 5px slategray;
 }
 
 header {
@@ -117,6 +116,7 @@ header {
     border-top: 3px solid white;
     margin: 0;
     font-size: 5vmin;
+    padding: 0;
 }
 
 
@@ -126,7 +126,7 @@ header {
 }
 
 .past-clicked{
-    background-color:  #E8E8E8;
+    background-color:  #F2F2F2;
     border: 3px solid #bd2e2e;
     height: 100%;
     width: 100%;
