@@ -1,7 +1,7 @@
 /*----- constants -----*/
 const playerOptions = {
     Beginner: { size: 9, numMines: 10, sqSize: 4, fontSize: 4.5 },
-    Intermediate: { size: 20, numMines: 50, sqSize: 2.2, fontSize: 2.5 },
+    Intermediate: { size: 20, numMines: 70, sqSize: 2.2, fontSize: 2.5 },
     Expert: { size: 30, numMines: 150, sqSize: 1.5, fontSize: 1.75 }
 }
 const imgMarker = 'images/flag-marker.png';
@@ -234,7 +234,6 @@ function openBlanks(x, y) {
 
     checkArray.forEach(function (elem) {
         let sqCheck = squaresDOMNest[eval(elem[0])][eval(elem[1])]
-        console.log(squaresDOMNest[eval(elem[0])][eval(elem[1])])
 
         if (sqCheck.className !== 'mine') {
             let vicTotal = checkVicinity(eval(elem[0]), eval(elem[1]));

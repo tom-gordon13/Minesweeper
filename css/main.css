@@ -30,6 +30,7 @@ container {
     justify-content: flex-start;
     align-items: center;
     flex-wrap: wrap;
+    box-shadow: 5px slategray;
     /* grid-template-rows: 10vh, 1fr; */
     /* border: 5px solid black; */
 }
