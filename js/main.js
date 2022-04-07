@@ -150,7 +150,6 @@ function checkVicinity(x, y) {
     return vicTotal;
 }
 
-
 function initSquares(size) {
 
     //Set board container size to fit squares
@@ -186,10 +185,6 @@ function assignMines() {
         // squaresDOMNest[mine.arr1][mine.arr2].style.backgroundColor = 'red';
     })
 }
-
-
-
-
 
 function loseFunction() {
     gameState = 'L';
@@ -280,8 +275,6 @@ function openBlanks(x, y) {
         while (value === 0) {
             if (eval(elem[0]) < 0 || eval(elem[0]) >= playerOptions[difficulty].size) return;
             if (eval(elem[1]) < 0 || eval(elem[1]) >= playerOptions[difficulty].size) return;
-            // console.log(x, y)
-            // console.log(eval(elem[0]), eval(elem[1]))
             let sqCheck = boardArr[eval(elem[0])][eval(elem[1])]
             if (Number.isInteger(sqCheck) && sqCheck > 0) squaresDOMNest[eval(elem[0])][eval(elem[1])].innerText = sqCheck;
             squaresDOMNest[eval(elem[0])][eval(elem[1])].className += '-past=clicked';
@@ -304,24 +297,9 @@ function renderVic() {
                 if (!boardArr[idx1][idx2]) { return; }
                 squaresDOMNest[idx1][idx2].innerText = boardArr[idx1][idx2];
                 squaresDOMNest[idx1][idx2].style.color = vicColors[boardArr[idx1][idx2]]
-
-
             }
         })
     })
-
-    // while (x < playerOptions[difficulty].size) {
-    //     let y = 0;
-    //     while (y < playerOptions[difficulty].size) {
-    //         if (!boardArr[x][y]) { y++; continue; };
-
-    //         if (Number.isInteger(boardArr[x][y])) squaresDOMNest[x][y].innerText = boardArr[x][y];
-    //         squaresDOMNest[x][y].style.color = vicColors[boardArr[x][y]]
-    //         // squaresDOMNest[x][y].className += '-past-clicked'
-    //         y++;
-    //     }
-    //     x++;
-    // }
 }
 
 function handleResetClick() {
