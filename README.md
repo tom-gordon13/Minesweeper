@@ -54,3 +54,19 @@
 ![Git](https://img.shields.io/badge/-Git-333?style=flat&logo=git)
 ![Github](https://img.shields.io/badge/-GitHub-333?style=flat&logo=github)
 ![VSCode](https://img.shields.io/badge/-VS_Code-333?style=flat&logo=visualstudio)
+
+
+<br>
+
+## :hammer: Work in Progress  
+
+### Keep an eye out for these exciting new features in the future!
+
+- [ ] Add local storage capabilities to track high scores   
+
+- [ ] Add logic where a clicked square will also display all adjacent squares with zero adjacent mindes   
+
+- [ ] Add explosion audio when a mine is clicked
+
+- [ ] Add additional animations for win/loss cases (shaking screen, confetti, etc.)
+
