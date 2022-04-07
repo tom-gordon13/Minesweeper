@@ -37,6 +37,7 @@ let handleClick = function handleClick(evt) {
 // RIGHT CLICK EVENT LISTENER
 let handleRightClick = function handleRightClick(evt) {
     evt.preventDefault(); // Prevents default "right click" action from occuring
+    if (gameState) return;
     clickedIdx = { total: null, arr1: null, arr2: null } // Reset Clicked Index object
 
     if (evt.target.className === 'markerImg') { evt.target.parentElement.id = 'clicked' };
