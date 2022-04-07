@@ -25,8 +25,8 @@ const checkArray = [
 ]
 const smiley = {
     0: 'images/smiley.png',
-    lose: 'images/smiley-sad.png',
-    win: 'images/smiley-sunglasses.png'
+    1: 'images/smiley-sad.png',
+    2: 'images/smiley-sunglasses.png'
 }
 
 /*----- app's state (variables) -----*/
@@ -57,7 +57,7 @@ let smileyDOM = document.getElementById('smiley')
 
 /*----- event listeners -----*/
 boardDOM.addEventListener('click', handleClick) // Left click event listener
-boardDOM.addEventListener('contextmenu', handleRightClick) // Right click event listener
+boardDOM.addEventListener('contextmenu', handleRightClick)   // Right click event listener
 resetDOM.addEventListener('click', handleResetClick) // Reset button event listener
 footerDOM.addEventListener('click', handleOptClick) // Buttons to change difficulty
 
@@ -177,7 +177,7 @@ function assignMines() {
 
 function loseFunction() {
     gameState = 'L';
-    document.getElementById('smiley').src = smiley['lose']
+    document.getElementById('smiley').src = smiley[1]
     render();
 }
 
@@ -194,8 +194,8 @@ function render() {
 
 function renderFace(gameState) {
     if (!gameState) smileyDOM.src = smiley[0];
-    if (gameState === 'W') smileyDOM.src = smiley['win'];
-    if (gameState === 'L') smileyDOM.src = smiley['lose'];
+    if (gameState === 'W') smileyDOM.src = smiley[2];
+    if (gameState === 'L') smileyDOM.src = smiley[1];
 }
 
 function renderMines(gameState) {
