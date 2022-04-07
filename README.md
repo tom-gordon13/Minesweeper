@@ -14,7 +14,27 @@
 <br>
 
 
-<img src='/images/Minesweeper-1.png' width="700">
+<details>
+<!-- <summary> :bar_chart: ERD</summary> -->
+
+<!-- | Description | Screenshot |
+|------------ | ------------| -->
+| <h3 align="center">The Basics</h3> | <img src='images/Minesweeper-1.png' width="700"> |
+</details>
+
+<details>
+<summary> :art: Wireframes</summary>
+
+| Description | Screenshot |
+|------------ | ------------|
+| <h3 align="center">Home Page</h3> | <img src="https://github.com/amarpan/meet-your-classmates/raw/main/public/Screenshots/Homepage.Wireframe.MYC.png" width="700"/>
+| <h3 align="center">Profile Page</h3> | <img src="https://github.com/amarpan/meet-your-classmates/raw/main/public/Screenshots/ProfilePage.Wireframe.MYC.png" width="700"> |
+</details>
+
+
+
+
+
 
 ## Technologies Used
 
