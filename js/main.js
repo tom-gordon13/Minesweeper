@@ -41,6 +41,7 @@ let vicTotal;
 let size;
 let num;
 let leftClickedSq;
+let rightClickedSq;
 
 /*----- cached element references -----*/
 //grab board, will be used to create squares
@@ -241,31 +242,6 @@ function renderMarkers() {
     markerCounter.innerText = num - markerArr.length; // Update marker counter
 }
 
-
-function openBlanks(x, y) {
-    let arr = [['x+1', 'y'], ['x-1', 'y'], ['x', 'y+1'], ['x', 'y-1']]
-    let baseX = x;
-    let baseY = y;
-    arr.forEach(function (elem) {
-        let value = 0;
-        x = baseX;
-        y = baseY;
-        while (value === 0) {
-            if (eval(elem[0]) < 0 || eval(elem[0]) >= playerOptions[difficulty].size) return;
-            if (eval(elem[1]) < 0 || eval(elem[1]) >= playerOptions[difficulty].size) return;
-            let sqCheck = boardArr[eval(elem[0])][eval(elem[1])]
-            if (Number.isInteger(sqCheck) && sqCheck > 0) squaresDOMNest[eval(elem[0])][eval(elem[1])].innerText = sqCheck;
-            squaresDOMNest[eval(elem[0])][eval(elem[1])].className += '-past=clicked';
-            squaresDOMNest[eval(elem[0])][eval(elem[1])].style.color = vicColors[sqCheck]
-            value = sqCheck;
-            x = eval(elem[0]);
-            y = eval(elem[1]);
-        }
-    })
-    render();
-}
-
-
 function renderVic() {
     squaresDOMNest.forEach(function (arr, idx1) {
         arr.forEach(function (elem, idx2) {
@@ -283,5 +259,7 @@ function handleResetClick() {
 }
 
 function assignClicked() {
+    if (!leftClickedSq) return;
     if (leftClickedSq.className === 'square') leftClickedSq.className += '-past-clicked';
+    leftClickedSq;
 }

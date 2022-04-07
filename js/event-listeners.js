@@ -30,7 +30,6 @@ let handleRightClick = function handleRightClick(evt) {
     evt.preventDefault(); // Prevents default "right click" action from occuring
     if (gameState) return;
     clickedIdx = { total: null, arr1: null, arr2: null } // Reset Clicked Index object
-
     if (evt.target.className === 'markerImg') { evt.target.parentElement.id = 'clicked' };
     extractClickedIdx(evt, 'clicked'); // return index of element that was clicked
     let rightClickIdx = clickedIdx;
@@ -40,11 +39,12 @@ let handleRightClick = function handleRightClick(evt) {
         boardArr[rightClickIdx.arr1][rightClickIdx.arr2] = '';
         let idx = markerArr.findIndex(elem => elem.total === rightClickIdx.total);
         markerArr.splice(idx, 1);
-        let sqDOM = squaresDOMNest[rightClickIdx.arr1][rightClickIdx.arr2];
-        sqDOM.removeChild(sqDOM.firstElementChild);
+        rightClickedSq = squaresDOMNest[rightClickIdx.arr1][rightClickIdx.arr2];
+        rightClickedSq.removeChild(rightClickedSq.firstElementChild);
         render();
         return;
     };
+
     boardArr[rightClickIdx.arr1][rightClickIdx.arr2] = 'marker'; // Add marker to the boardArr that warightClickIdx
     extractClickedIdx(evt, 'marker');
 
