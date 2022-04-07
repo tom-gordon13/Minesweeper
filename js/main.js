@@ -227,7 +227,6 @@ function winFunction() {
     renderFace(gameState);
 }
 
-
 function renderMarkers() {
     let img = document.createElement('img')
     img.style.height = `${playerOptions[difficulty].imgSize}%`;
@@ -260,6 +259,6 @@ function handleResetClick() {
 
 function assignClicked() {
     if (!leftClickedSq) return;
-    if (leftClickedSq.className === 'square') leftClickedSq.className += '-past-clicked';
-    leftClickedSq;
+    if (leftClickedSq.className === 'square') leftClickedSq.className += '-past-clicked'; //Add new styling to squares once they have been left-clicked
+    leftClickedSq; // reset leftClickedSq value
 }
