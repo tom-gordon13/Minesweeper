@@ -14,8 +14,8 @@
 
 
 <h1>Game Description</h1>
-<h3>Link to game: https://tom-gordon13.github.io/Minesweeper/</h3>
-<h3></h3>
+<h3>Link to game:</h3>
+<h3>https://tom-gordon13.github.io/Minesweeper/</h3>
 <br>
 <p>Originally debuted in 1990, <i>Minesweeper</i> may be the world's most popular time-wasting game. Come re-live the 90's with this rendition of the classic that was partially devised as a way to teach users the basics of mouse control following an era where most computers relied on text-based interaction</p>
 <br>

@@ -7,32 +7,23 @@ function extractClickedIdx(evt, idName) {
     evt.target.removeAttribute('id'); // Remove 'clicked' id so that it does not interfere with next square clicked
 }
 
-
 // LEFT CLICK EVENT LISTENER
 let handleClick = function handleClick(evt) {
-    if (gameState) return;
+    if (gameState) return; // Ignore clicks if gameState is 'W' or 'L'
     clickedIdx = { total: null, arr1: null, arr2: null } // Reset Clicked Index object
     extractClickedIdx(evt, 'clicked'); // Extract the index of a square that was clicked
-
-    if (!Number.isInteger(clickedIdx.total)) return;
     let leftClickIdx = clickedIdx;
 
-
+    if (!Number.isInteger(clickedIdx.total)) return;
     if (leftClickIdx.total === -1) return;
     if (boardArr[leftClickIdx.arr1][leftClickIdx.arr2] === 'marker') return; // Ignore click if click index matches a marker index
     if (mineArr.some(elem => elem.total == leftClickIdx.total)) { loseFunction(); return; }; // Check if clicked button index matches the index of a mine
 
     let vicTotal = checkVicinity(leftClickIdx.arr1, leftClickIdx.arr2)
     boardArr[leftClickIdx.arr1][leftClickIdx.arr2] = vicTotal; // add vicinity mines to boardArr
-
-    // openBlanks(leftClickIdx.arr1, leftClickIdx.arr2);
-
-
-    if (evt.target.className === 'square') evt.target.className += '-past-clicked' // Obtain "square-past-clicked" styling
-
+    leftClickedSq = evt.target;
     render();
 }
-
 
 // RIGHT CLICK EVENT LISTENER
 let handleRightClick = function handleRightClick(evt) {
@@ -45,18 +36,15 @@ let handleRightClick = function handleRightClick(evt) {
     let rightClickIdx = clickedIdx;
 
     if (squaresDOMNest[rightClickIdx.arr1][rightClickIdx.arr2].className === 'square-past-clicked') return; // ignores right clicks on pieces that have already been left-clicked
-
     if (boardArr[rightClickIdx.arr1][rightClickIdx.arr2] === 'marker') {
         boardArr[rightClickIdx.arr1][rightClickIdx.arr2] = '';
         let idx = markerArr.findIndex(elem => elem.total === rightClickIdx.total);
         markerArr.splice(idx, 1);
         let sqDOM = squaresDOMNest[rightClickIdx.arr1][rightClickIdx.arr2];
         sqDOM.removeChild(sqDOM.firstElementChild);
-
         render();
         return;
     };
-
     boardArr[rightClickIdx.arr1][rightClickIdx.arr2] = 'marker'; // Add marker to the boardArr that warightClickIdx
     extractClickedIdx(evt, 'marker');
 
@@ -65,8 +53,6 @@ let handleRightClick = function handleRightClick(evt) {
     evt.target.id = 'square';
     render();
 }
-
-
 
 function handleOptClick(evt) {
     if (evt.target.className !== 'opt-btn') return;
