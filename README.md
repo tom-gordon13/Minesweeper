@@ -13,6 +13,9 @@
 
 <br>
 
+
+<img src='/images/Minesweeper-1.png' width="700">
+
 ## Technologies Used
 
 ![JavaScript](https://img.shields.io/badge/-JavaScript-333?style=flat&logo=javascript) 
