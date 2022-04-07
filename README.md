@@ -15,26 +15,35 @@
 
 
 <details>
-<!-- <summary> :bar_chart: ERD</summary> -->
+<summary> Gameplay Instructions</summary>
 
-<!-- | Description | Screenshot |
-|------------ | ------------| -->
-| <h3 align="center">The Basics</h3> | <img src='images/Minesweeper-1.png' width="700"> |
+| The Basics |  |
+|------------ | ------------|
+| <h4 align="left">Left-click on a square to check if there is a mine underneath. If a number appears in that square, BEWARE! That is the number of mines underneath adjacent squares!</h4> | <img src='images/Minesweeper-1.png' width="1100"> |
+| <h4 align="left">Right-click on a square if you believe there is a marker underneath. The tracker in the upper left tells you how many mines remain un-marked, assuming you haven't incorrectly placed a marker.</h4> | <img src='images/Minesweeper-2.png' width="1100"> |
 </details>
 
 <details>
-<summary> :art: Wireframes</summary>
+<summary> How to Win... or Lose!</summary>
 
-| Description | Screenshot |
+| How to Win |  |
 |------------ | ------------|
-| <h3 align="center">Home Page</h3> | <img src="https://github.com/amarpan/meet-your-classmates/raw/main/public/Screenshots/Homepage.Wireframe.MYC.png" width="700"/>
-| <h3 align="center">Profile Page</h3> | <img src="https://github.com/amarpan/meet-your-classmates/raw/main/public/Screenshots/ProfilePage.Wireframe.MYC.png" width="700"> |
+| <h4 align="left">There are two ways to win - either correctly mark all of the squares with mines, or dig up all of the squares without! The smiley will look down upon you fondly if you win.</h4> | <img src='images/Minesweeper-3.png' width="1100"> |
+| <h4 align="left">If you accidentally left-click on a mine - game over! The smiley will not be happy.</h4> | <img src='images/Minesweeper-4.png' width="1100"> |
+</details>
+
+<details>
+<summary> Ramping Things Up</summary>
+
+| Setting the difficulty |  |
+|------------ | ------------|
+| <h4 align="left">Are things a little too easy for you? Try ramping things up with intermediate or even expert difficulty!</h4> |  <img src='images/Minesweeper-6.png' width="550">|
+
 </details>
 
 
 
-
-
+<br>
 
 ## Technologies Used
 
