@@ -1,12 +1,22 @@
 <div align="center">
 
    <h1>:triangular_flag_on_post: Minesweeper :triangular_flag_on_post:</h1>
-   <h5>Tom Gordon</h5>                             
-   <h3>https://tom-gordon13.github.io/Minesweeper/</h3>
+   
+   
+   <h5>Tom Gordon</h5>
+   <a href="https://github.com/tom-gordon13" target="_blank">
+      <img src="https://img.shields.io/badge/-Portfolio:_user.github.io-darkgreen?style=flat&logo=medium"/>
+   <a href="https://www.linkedin.com/in/thomas-gordon13/" target="_blank">
+      <img src="https://img.shields.io/badge/-linkedin.com/in/thomas-blue?style=flat&``logo=Linkedin&logoColor=white">                             
    <h1></h1>
 </div>
 
+
+
 <h1>Game Description</h1>
+<h3>Link to game: https://tom-gordon13.github.io/Minesweeper/</h3>
+<h3></h3>
+<br>
 <p>Originally debuted in 1990, <i>Minesweeper</i> may be the world's most popular time-wasting game. Come re-live the 90's with this rendition of the classic that was partially devised as a way to teach users the basics of mouse control following an era where most computers relied on text-based interaction</p>
 <br>
 <p>Left click to dig for a mine. Right click to place a flag. Some things never change, including the ever-present smiley face watching over all. And don't worry, for those <i>Minesweeper</i> experts out there who spent hours mindlessly clicking for mines back in the day, feel free to up the difficulty and prove your mettle.</p>
