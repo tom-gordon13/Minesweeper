@@ -25,7 +25,7 @@ let handleClick = function handleClick(evt) {
     let vicTotal = checkVicinity(leftClickIdx.arr1, leftClickIdx.arr2)
     boardArr[leftClickIdx.arr1][leftClickIdx.arr2] = vicTotal; // add vicinity mines to boardArr
 
-    // if (vicTotal === 0) openBlanks(leftClickIdx.arr1, leftClickIdx.arr2);
+    // openBlanks(leftClickIdx.arr1, leftClickIdx.arr2);
 
 
     if (evt.target.className === 'square') evt.target.className += '-past-clicked' // Obtain "square-past-clicked" styling

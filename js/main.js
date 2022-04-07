@@ -270,20 +270,30 @@ function renderMarkers() {
 
 
 function openBlanks(x, y) {
-
-    i = 0;
-    while (i <= playerOptions[difficulty].size) {
-        if (i > x || boardArr[i][y] === 0) {
-            if (typeof boardArr[i][y] === 'string' && boardArr[i][y].length > 0) break;
-            if (boardArr[i][y] !== 'mine') checkVicinity(i, y);
-            if (i < x && vicTotal > 0) continue;
-            boardArr[i][y] = vicTotal;
-            squaresDOMNest[i][y].className += '-past-clicked';
-            if (boardArr[i][y] > 0) break;
+    let arr = [['x+1', 'y'], ['x-1', 'y'], ['x', 'y+1'], ['x', 'y-1']]
+    let baseX = x;
+    let baseY = y;
+    arr.forEach(function (elem) {
+        let value = 0;
+        x = baseX;
+        y = baseY;
+        while (value === 0) {
+            if (eval(elem[0]) < 0 || eval(elem[0]) >= playerOptions[difficulty].size) return;
+            if (eval(elem[1]) < 0 || eval(elem[1]) >= playerOptions[difficulty].size) return;
+            // console.log(x, y)
+            // console.log(eval(elem[0]), eval(elem[1]))
+            let sqCheck = boardArr[eval(elem[0])][eval(elem[1])]
+            if (Number.isInteger(sqCheck) && sqCheck > 0) squaresDOMNest[eval(elem[0])][eval(elem[1])].innerText = sqCheck;
+            squaresDOMNest[eval(elem[0])][eval(elem[1])].className += '-past=clicked';
+            squaresDOMNest[eval(elem[0])][eval(elem[1])].style.color = vicColors[sqCheck]
+            value = sqCheck;
+            x = eval(elem[0]);
+            y = eval(elem[1]);
         }
-        ++i;
-    }
+    })
+    render();
 }
+
 
 function renderVic() {
     // let x = 0;
