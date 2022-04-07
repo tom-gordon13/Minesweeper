@@ -38,8 +38,8 @@ let gameState;
 let timerRef;
 let clickedIdx = { total: null, arr1: null, arr2: null }; // Object that will hold the index value of the most recently clicked array
 let vicTotal;
-let size;
-let num;
+let size; // Width/height of the game board
+let num; // Number of mines in play
 let leftClickedSq;
 let rightClickedSq;
 

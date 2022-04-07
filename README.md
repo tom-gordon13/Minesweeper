@@ -18,6 +18,8 @@
 <p>Left click to dig for a mine. Right click to place a flag. Some things never change, including the ever-present smiley face watching over all. And don't worry, for those <i>Minesweeper</i> experts out there who spent hours mindlessly clicking for mines back in the day, feel free to up the difficulty and prove your mettle.</p>
 <br>
 
+
+<h2> :key: Getting Started </h2>
 <details>
 <summary> Gameplay Instructions</summary>
 
@@ -56,7 +58,6 @@
 ![Git](https://img.shields.io/badge/-Git-333?style=flat&logo=git)
 ![Github](https://img.shields.io/badge/-GitHub-333?style=flat&logo=github)
 ![VSCode](https://img.shields.io/badge/-VS_Code-333?style=flat&logo=visualstudio)
-
 
 <br>
 
