@@ -13,7 +13,7 @@
 <a href='https://tom-gordon13.github.io/Minesweeper/'>Click here to play the game!</a>
 <br>
 <br>
-<p>Originally debuted in 1990, <i>Minesweeper</i> may be the world's most popular time-wasting game. Come re-live the 90's with this rendition of the classic that was partially devised as a way to teach users the basics of mouse control following an era where most computers relied on text-based interaction.</p>
+<p>First seen in its current form in 1990, <i>Minesweeper</i> may be the world's most popular time-wasting game. Come re-live the 90's with this rendition of the classic that was allegedly devised as a way to teach users the basics of mouse control following an era where most computers relied on text-based interaction.</p>
 <br>
 <p>Left-click to dig for a mine. Right-click to place a flag. Some things never change, including the ever-present smiley face watching over all. And don't worry, for those experts out there who spent hours mindlessly clicking for mines back in the day, feel free to up the difficulty and prove your mettle.</p>
 <br>
