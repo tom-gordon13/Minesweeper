@@ -264,7 +264,7 @@ function assignClicked() {
 }
 
 // Future function that will allow clicks to expose all squares with vicTotal = 0 in adjacent squares
-function openBlanks(x, y) {
+function openAdj(x, y) {
     let arr = [['x+1', 'y'], ['x-1', 'y'], ['x', 'y+1'], ['x', 'y-1']]
     let baseX = x;
     let baseY = y;
