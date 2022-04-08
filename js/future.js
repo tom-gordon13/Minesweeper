@@ -5,20 +5,19 @@ function openBlanks(x, y) {
     let baseY = y;
     arr.forEach(function (elem) {
         let value = 0;
-        let sqCheck;
-        x = baseX;
+        x = baseX; // set base coordinates of square clicked
         y = baseY;
+        value = boardArr[x][y]
         while (value === 0) {
-            if (sqCheck) value = sqCheck;
-            if (eval(elem[0]) < 0 || eval(elem[0]) >= playerOptions[difficulty].size) return;
-            if (eval(elem[1]) < 0 || eval(elem[1]) >= playerOptions[difficulty].size) return;
-            sqCheck = boardArr[eval(elem[0])][eval(elem[1])]
-            if (Number.isInteger(sqCheck) && sqCheck > 0 && typeof (sqCheck) !== 'string') squaresDOMNest[eval(elem[0])][eval(elem[1])].innerText = sqCheck;
-            // if (Number.isInteger(sqCheck)) squaresDOMNest[eval(elem[0])][eval(elem[1])].innerText = sqCheck;
-            if (typeof (sqCheck) !== 'string') squaresDOMNest[eval(elem[0])][eval(elem[1])].className += '-past-clicked';
-            squaresDOMNest[eval(elem[0])][eval(elem[1])].style.color = vicColors[sqCheck]
-            x = eval(elem[0]);
+            x = eval(elem[0]); // increment to next square
             y = eval(elem[1]);
+            if (x < 0 || x >= playerOptions[difficulty].size) return; //check for edge of board cases
+            if (y < 0 || y >= playerOptions[difficulty].size) return;
+            sqCheck = boardArr[x][y];
+            if (Number.isInteger(sqCheck) && sqCheck > 0 && typeof (sqCheck) !== 'string') squaresDOMNest[x][y].innerText = sqCheck;
+            if (typeof (sqCheck) !== 'string' && squaresDOMNest[x][y].className === 'square') squaresDOMNest[x][y].className += '-past-clicked';
+            squaresDOMNest[x][y].style.color = vicColors[sqCheck]
+            value = sqCheck;
         }
     })
     render();
