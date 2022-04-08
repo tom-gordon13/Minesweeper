@@ -5,16 +5,18 @@ function openBlanks(x, y) {
     let baseY = y;
     arr.forEach(function (elem) {
         let value = 0;
+        let sqCheck;
         x = baseX;
         y = baseY;
         while (value === 0) {
+            if (sqCheck) value = sqCheck;
             if (eval(elem[0]) < 0 || eval(elem[0]) >= playerOptions[difficulty].size) return;
             if (eval(elem[1]) < 0 || eval(elem[1]) >= playerOptions[difficulty].size) return;
-            let sqCheck = boardArr[eval(elem[0])][eval(elem[1])]
-            if (Number.isInteger(sqCheck) && sqCheck > 0) squaresDOMNest[eval(elem[0])][eval(elem[1])].innerText = sqCheck;
-            squaresDOMNest[eval(elem[0])][eval(elem[1])].className += '-past=clicked';
+            sqCheck = boardArr[eval(elem[0])][eval(elem[1])]
+            if (Number.isInteger(sqCheck) && sqCheck > 0 && typeof (sqCheck) !== 'string') squaresDOMNest[eval(elem[0])][eval(elem[1])].innerText = sqCheck;
+            // if (Number.isInteger(sqCheck)) squaresDOMNest[eval(elem[0])][eval(elem[1])].innerText = sqCheck;
+            if (typeof (sqCheck) !== 'string') squaresDOMNest[eval(elem[0])][eval(elem[1])].className += '-past-clicked';
             squaresDOMNest[eval(elem[0])][eval(elem[1])].style.color = vicColors[sqCheck]
-            value = sqCheck;
             x = eval(elem[0]);
             y = eval(elem[1]);
         }

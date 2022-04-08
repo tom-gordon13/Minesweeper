@@ -13,7 +13,6 @@ let handleClick = function handleClick(evt) {
     clickedIdx = { total: null, arr1: null, arr2: null } // Reset Clicked Index object
     extractClickedIdx(evt, 'clicked'); // Extract the index of a square that was clicked
     let leftClickIdx = clickedIdx;
-
     if (!Number.isInteger(clickedIdx.total)) return;
     if (leftClickIdx.total === -1) return;
     if (boardArr[leftClickIdx.arr1][leftClickIdx.arr2] === 'marker') return; // Ignore click if click index matches a marker index
