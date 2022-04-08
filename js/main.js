@@ -233,8 +233,6 @@ function renderMarkers() {
     img.style.width = `${playerOptions[difficulty].imgSize}%`;
     img.src = imgMarker;
     img.className = 'markerImg'
-
-    // markerArr.forEach(elem => squaresDOMNest[elem.arr1][elem.arr2].appendChild(img));
     markerArr.forEach(function (elem) {
         if (!squaresDOMNest[elem.arr1][elem.arr2].hasChildNodes()) squaresDOMNest[elem.arr1][elem.arr2].appendChild(img)
     })
